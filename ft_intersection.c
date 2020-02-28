@@ -6,133 +6,151 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/02/26 17:26:10 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/02/28 22:21:25 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libcub3d.h"
 
+typedef struct s_ray
+{
+	int down;
+	int up;
+	int right;
+	int left;
+}               t_ray;
+
+t_ray ray;
+
+void    init_ray()
+{
+	ray.down = 0;
+	ray.up = 0;
+	ray.right = 0;
+	ray.left = 0;
+}
 
 void    RayFacing(float angle)
 {
-    data.ray.down = angle > 0 && angle < M_PI;
-    data.ray.up = !data.ray.down;
-    data.ray.right = angle < 0.5 * M_PI || angle > 1.5 * M_PI;
-    data.ray.left = !data.ray.right;
+	init_ray();
+	ray.down = angle > 0 && angle < M_PI;
+	ray.up = !ray.down;
+	ray.right = angle < 0.5 * M_PI || angle > 1.5 * M_PI;
+	ray.left = !ray.right;
 
 }
 
-void    ft_find_intersection(int col, float angle)
+
+float   ft_distanceBetweenPoints(float x1, float y1, float x2, float y2) 
+{ 
+    return sqrt(pow(x2 - x1, 2) +  pow(y2 - y1, 2)); 
+} 
+
+float    ft_Wall_Hit(int col, float rayAngle)
 {
-    float xintercept;
-    float yintercept;
-    float xstep;
-    float ystep;
-    int foundHorzWallHit = 0;
-    float horzWallHitX = 0;
-    float horzWallHitY = 0;
-    t_direction nextHorzTouch;
+	float xintercept, yintercept;
+	float xstep, ystep;
 
-    RayFacing(angle);
-    
-    yintercept = floor(data.player_y) * TILE_SIZE;
-    yintercept += data.ray.down ? TILE_SIZE : 0;
+	float foundHorzWallHit = FALSE;
+	float horzWallHitX = 0;
+	float horzWallHitY = 0;
+	
+	RayFacing(rayAngle);
+	yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
+	yintercept += ray.down ? TILE_SIZE : 0;
 
-    xintercept = data.player_x*TILE_SIZE + (yintercept - data.player_y*TILE_SIZE) / tan(angle);
+	xintercept = player.x + (yintercept - player.y) / tan(rayAngle);
 
-    ystep = TILE_SIZE;
-    ystep *= data.ray.up ? -1 : 1;
+	ystep = TILE_SIZE;
+	ystep *= ray.up ? -1 : 1;
 
-    xstep = TILE_SIZE / tan(angle);
-    xstep *= (data.ray.left && xstep > 0) ? -1 : 1;
-    xstep *= (data.ray.right && xstep < 0) ? -1 : 1;
+	xstep = TILE_SIZE / tan(rayAngle);
+	xstep *= (ray.left && xstep > 0) ? -1 : 1;
+	xstep *= (ray.right && xstep < 0) ? -1 : 1;
 
+	float nextHorzTouchX = xintercept;
+	float nextHorzTouchY = yintercept;
 
-    nextHorzTouch.x = xintercept;
-    nextHorzTouch.y = yintercept;
+	if (ray.up)
+		nextHorzTouchY--;
 
-    int  width;
-    int  height;
+	while (nextHorzTouchX >= 0 && nextHorzTouchX < data.Width && nextHorzTouchY >= 0 && nextHorzTouchY < data.Height) {
+		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY)) {
+			foundHorzWallHit = TRUE;
+			horzWallHitX = nextHorzTouchX;
+			horzWallHitY = nextHorzTouchY;
+			break;
+		} else {
+			nextHorzTouchX += xstep;
+			nextHorzTouchY += ystep;
+		}
+	}
 
-    width = ft_strlen(data.map[0]) * TILE_SIZE;
-    height = data.map_ln * TILE_SIZE;
+	float foundVertWallHit = FALSE;
+	float vertWallHitX = 0;
+	float vertWallHitY = 0;
 
-    if (data.ray.up)
-        (nextHorzTouch.y)--;
-        
-    while ((nextHorzTouch.x >= 0 && nextHorzTouch.x < width) && (nextHorzTouch.y >= 0 && nextHorzTouch.y < height))
-    {
-        if (isWall(nextHorzTouch))
-        {
-            foundHorzWallHit = 1;
-            horzWallHitX = nextHorzTouch.x;
-            horzWallHitY = nextHorzTouch.y;
-            break ;
-        }
-        else
-        {
-            nextHorzTouch.x += xstep;
-            nextHorzTouch.y += ystep;
-        }
-    }
-    
-    xintercept = 0;
-    yintercept = 0;
-    xstep = 0;
-    ystep = 0;
+	xintercept = floor(player.x / TILE_SIZE) * TILE_SIZE;
+	xintercept += ray.right ? TILE_SIZE : 0;
 
-    int foundVertWallHit = 0;
-    float vertWallHitX = 0;
-    float vertWallHitY = 0;
-    t_direction nextVertTouch;
+	yintercept = player.y + (xintercept - player.x) * tan(rayAngle);
 
+	xstep = TILE_SIZE;
+	xstep *= ray.left ? -1 : 1;
 
-    xintercept = floor(data.player_x) * TILE_SIZE;
-    xintercept += data.ray.right ? TILE_SIZE : 0;
+	ystep = TILE_SIZE * tan(rayAngle);
+	ystep *= (ray.up && ystep > 0) ? -1 : 1;
+	ystep *= (ray.down && ystep < 0) ? -1 : 1;
 
-    yintercept = data.player_y*TILE_SIZE + (xintercept - data.player_x*TILE_SIZE) * tan(angle);
+	float nextVertTouchX = xintercept;
+	float nextVertTouchY = yintercept;
 
-    xstep = TILE_SIZE;
-    xstep *= data.ray.left ? -1 : 1;
+	if (ray.left)
+		nextVertTouchX--;
 
-    ystep = TILE_SIZE * tan(angle);
-    ystep *= (data.ray.up && ystep > 0) ? -1 : 1;
-    ystep *= (data.ray.down && ystep < 0) ? -1 : 1;
+	while ((nextVertTouchX > 0 && nextVertTouchX < data.Width) && (nextVertTouchY > 0  && nextVertTouchY < data.Height)) {
+		if (!ft_hasWall(nextVertTouchX, nextVertTouchY)) {
+			foundVertWallHit = TRUE;
+			vertWallHitX = nextVertTouchX;
+			vertWallHitY = nextVertTouchY;
+			break;
+		} else {
+			nextVertTouchX += xstep;
+			nextVertTouchY += ystep;
+		}
+	}
 
+	float horzHitDistance = (foundHorzWallHit)
+            ? ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+            : INT_MAX;
+    float vertHitDistance = (foundVertWallHit)
+            ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+            : INT_MAX;
 
-    nextVertTouch.x = xintercept;
-    nextVertTouch.y = yintercept;
+	float wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
+	float wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
+	float distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
+	float wasHitVertical = (vertHitDistance < horzHitDistance);
+	
+	float distanceProjPlane;
+    float raydist;  
+    float an;
+    float wallStripHeight;
 
-    if (data.ray.left)
-        (nextVertTouch.x)--;
-        
-    while ((nextVertTouch.x >= 0 && nextVertTouch.x < width) && (nextVertTouch.y >= 0 && nextVertTouch.y < height))
-    {
-        if (isWall(nextVertTouch))
-        {
-            foundVertWallHit = 1;
-            vertWallHitX = nextVertTouch.x;
-            vertWallHitY = nextVertTouch.y;
-            break ;
-        }
-        else
-        {
-            nextVertTouch.x += xstep;
-            nextVertTouch.y += ystep;
-        }
-    }
-    float horzHitDistance = foundHorzWallHit ? ft_distance_beetwen_points(data.player_x*TILE_SIZE, data.player_y*TILE_SIZE, horzWallHitX, horzWallHitY) : INT_MAX;
-    float vertHitDistance = foundVertWallHit ? ft_distance_beetwen_points(data.player_x*TILE_SIZE, data.player_y*TILE_SIZE, vertWallHitX, vertWallHitY) : INT_MAX;
-    
-    float WallHitX;
-    float WallHitY;
-    int wasVert;
+    an = rayAngle - player.dirangle;
+    ft_normalizeAngle(&an);
+    raydist  = distance * cos(an);
+    distanceProjPlane = (data.Width/2) / tan(player.fov/2);
+    wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
 
-    data.wasVert = (vertHitDistance < horzHitDistance);
-    WallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
-    WallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
-    data.ray.dist = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
-    ft_wall_casting(col, angle, data.wasVert, WallHitX, WallHitY);
-    ft_draw_map();
-    ft_draw_line(data.player_x * 10, data.player_y * 10, WallHitX * 10 / TILE_SIZE, WallHitY * 10 / TILE_SIZE, RED);
+    float offset = ((wasHitVertical == 0) ? fmod(wallHitX , TILE_SIZE) : fmod(wallHitY, TILE_SIZE));
+
+    ft_draw_line(col, data.Height/2 - wallStripHeight/2,  col, data.Height/2 + wallStripHeight/2);
+
+    // CEILLING
+    //ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2);
+    // FLOOR
+    //ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height);
+    //ft_draw_line(player.x, player.y, wallHitX , wallHitY);
+    return (distance);
 }

@@ -2,30 +2,31 @@
 
 void    ft_pixel_put(float x, float y, unsigned int color)
 {
+    if (x < 0|| x > data.Width || y < 0 || y > data.Height)
+        return ;
     mlx_pixel_put(mlx.mlx, mlx.window, x, y, color);
 }
 
 void    ft_draw_line(float X0, float Y0, float X1 , float Y1)
 {
-    int i;
     int dx = X1 - X0; 
     int dy = Y1 - Y0; 
-  
+    int i;
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
   
     float Xinc = dx / (float) steps; 
     float Yinc = dy / (float) steps; 
-
+  
     float X = X0; 
     float Y = Y0;
     i = 0;
-    while (i <= steps) 
-    { 
-        ft_pixel_put(X,Y,RED);
+    while (i < steps) 
+    {
+        ft_pixel_put(X, Y, RED);
         X += Xinc;
-        Y += Yinc; 
+        Y += Yinc;
+        i++;
     } 
-
 }
 
 void    ft_draw_player(void)
@@ -38,10 +39,11 @@ void    ft_draw_player(void)
     col = 0;
     j = player.dirangle - (player.fov)/2;
     i = player.fov/data.Width;
+    ft_normalizeAngle(&j);
     while (col < data.Width)
     {
         ft_normalizeAngle(&j);
-        ft_draw_line(player.x, player.y, player.x + 10 * cos(j), player.y + 10);
+        ft_Wall_Hit(col, j);
         col++;
         j += i;
     }
@@ -58,7 +60,7 @@ void    ft_draw_cube(int  x, int y)
         j = 0;
         while (j < TILE_SIZE)
         {
-            mlx_pixel_put(mlx.mlx, mlx.window, x + i, y + j, 16777215);
+            //mlx_pixel_put(mlx.mlx, mlx.window, x + i, y + j, 16777215);
             j++;
         }
         i++;
@@ -75,6 +77,7 @@ void ft_draw_map(void)
 {
     int i;
     int j;
+    static int k = 1;
 
     i = 0;
     j = 0;
@@ -85,7 +88,7 @@ void ft_draw_map(void)
         {
             if (data.map[i][j] == '1')
                 ft_draw_cube(j * TILE_SIZE , i * TILE_SIZE);
-            if (data.map[i][j] == 'N' || data.map[i][j] == 'W' || data.map[i][j] == 'E' || data.map[i][j] == 'S')
+            if ((data.map[i][j] == 'N' || data.map[i][j] == 'W' || data.map[i][j] == 'E' || data.map[i][j] == 'S') && k ==1)
             {
                     if (data.map[i][j] == 'N')
                         player.dirangle = 90 * M_PI / 180;
@@ -97,6 +100,7 @@ void ft_draw_map(void)
                         player.dirangle = 270 * M_PI / 180;
                     player.x = j * TILE_SIZE;
                     player.y = i * TILE_SIZE;
+                    k++;
             }
             else if (data.map[i][j] == '2')
                 ft_add_sprites(i, j);

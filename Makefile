@@ -4,7 +4,8 @@ SRC =	ft_gather_data.c\
 		ft_hooks.c\
 		ray.c\
 		main.c\
-		ft_draw.c
+		ft_draw.c\
+		ft_intersection.c
 
 
 LIB =	ft_printf/libftprintf.a
