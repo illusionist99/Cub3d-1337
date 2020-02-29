@@ -20,8 +20,9 @@ void    init_player()
     player.rotationSpeed = 3 * (M_PI / 180);
     player.fov = 60 * (M_PI / 180);
     data.nb_of_rows = ft_strlen(data.map[0]);
+    // change name
     data.nb_of_cols = ft_map_cols(data.map);
-    printf("rows : %d | cols : %d\n", data.nb_of_rows, data.nb_of_cols );
+    printf("rows : %d | cols : %d\n", data.nb_of_rows, data.nb_of_cols);
 }
 
 int     ft_hasWall(float pos_x, float pos_y)
@@ -29,8 +30,8 @@ int     ft_hasWall(float pos_x, float pos_y)
     int x;
     int y;
 
-    x = floor(pos_x / TILE_SIZE);
-    y = floor(pos_y / TILE_SIZE);
+    x = (int )(pos_x / TILE_SIZE);
+    y = (int )(pos_y / TILE_SIZE);
     if (x < 0 || x >= data.nb_of_rows || y < 0 || y >= data.nb_of_cols)
         return (1);
     else if (data.map[y][x] == '1')
@@ -47,7 +48,7 @@ void    ft_position_update()
     float newPlayerX = player.x + cos(player.dirangle) * moveStep;
     float newPlayerY = player.y + sin(player.dirangle) * moveStep;
 
-    if (ft_hasWall(newPlayerX, newPlayerY))
+    if (ft_hasWall( player.x + cos(player.dirangle) * moveStep * 5, player.y + sin(player.dirangle) * moveStep * 5))
     {
         player.x = newPlayerX;
         player.y = newPlayerY;
@@ -59,6 +60,7 @@ int    ft_update()
     ft_position_update();
     ft_draw_map();
     ft_draw_player();
+    ft_drawmap();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);
     mlx_destroy_image(mlx.mlx, image.ptr);
     return (1);
@@ -66,19 +68,24 @@ int    ft_update()
 
 void    init_textures()
 {
-    printf("%s | %s | %s |%s\n", data.Path.north , data.Path.east, data.Path.west, data.Path.south);
-    north.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.north , &north.width, &north.height);
-    north.data = (int *)mlx_get_data_addr(north.ptr, &north.bits_per_pixel, &north.size_line, &north.endian);
+    // printf("%s | %s | %s |%s\n", data.Path.north , data.Path.east, data.Path.west, data.Path.south);
+    north.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.north, &north.width, &north.height);
+    west.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.west, &west.width, &west.height);
+    south.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.south, &south.width, &south.height);
+    east.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.east, &east.width, &east.height);
 
-    // west.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.west, &west.width, &west.height);
-    // west.data = (int *)mlx_get_data_addr(west.ptr, &west.bits_per_pixel, &west.size_line, &west.endian);
-
-    // south.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.south, &south.width, &south.height);
-    // south.data = (int *)mlx_get_data_addr(south.ptr, &south.bits_per_pixel, &south.size_line, &south.endian);
-
-    // east.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.east, &east.width, &east.height);
-    // east.data = (int *)mlx_get_data_addr(east.ptr, &east.bits_per_pixel, &east.size_line, &east.endian);
-
+    if (north.ptr && west.ptr && south.ptr && east.ptr)
+    {
+        north.data = (int *)mlx_get_data_addr(north.ptr, &north.bits_per_pixel, &north.size_line, &north.endian);
+        west.data = (int *)mlx_get_data_addr(west.ptr, &west.bits_per_pixel, &west.size_line, &west.endian);
+        south.data = (int *)mlx_get_data_addr(south.ptr, &south.bits_per_pixel, &south.size_line, &south.endian);
+        east.data = (int *)mlx_get_data_addr(east.ptr, &east.bits_per_pixel, &east.size_line, &east.endian);
+    }
+    else
+    {
+        ft_printf("\033[;32m TexTure Error Please set a Valid Path");
+        exit(1);
+    }
 }
 
 int     main(int argc, char **argv)

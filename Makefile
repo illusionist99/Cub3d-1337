@@ -15,7 +15,7 @@ GNL = gnl/get_next_line.c gnl/get_next_line_utils.c
 
 Flags = -Wall -Werror -Wextra
 
-OPENGL =  -framework OpenGL -framework AppKit
+OPENGL =  -framework OpenGL -framework AppKit  -Ofast
 
 MLIB = minilibx/libmlx.a
 
@@ -24,7 +24,7 @@ all : $(NAME)
 $(NAME) : 
 		make -C ft_printf/ re
 		make -C minilibx/ re
-		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(OPENGL) -fsanitize=address -g
+		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(OPENGL)  -g
 
 clean:
 	rm -f *.o ft_printf/*.o minilibx/*.o

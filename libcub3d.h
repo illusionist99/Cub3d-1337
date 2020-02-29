@@ -25,6 +25,9 @@
 # define    MINIMAP_SCALE   0.3
 # define    WHITE           16777215
 # define    RED             9830400
+# define    SKY 	        1008890
+# define    FLOOR	        321600
+
 
 # define    TRUE        1
 # define    FALSE       0
@@ -110,6 +113,12 @@ typedef struct s_pos
     int         wasHitVertical;
 }               t_pos;
 
+// typedef struct s_sprites
+// {
+
+// }              t_sprites;
+
+
 
 t_ray           ray;
 t_data          data;
@@ -124,7 +133,7 @@ t_image         east;
 
 void	        set_hooks();
 int             ft_update();
-void            ft_pixel_put(float x, float y, int color);
+void            ft_pixel_put(int x, int y, unsigned int color);
 int             ft_read_map(char **str);
 unsigned int    rgb_to_int(unsigned int r, unsigned int g, unsigned int b);
 void            ft_draw_map(void);
@@ -132,7 +141,7 @@ void            ft_draw_player(void);
 void           ft_Wall_Hit(int col, float rayAngle);
 int             ft_hasWall(float x, float y);
 float           ft_normalizeAngle(float *angle);
-void            ft_draw_line(float X0, float Y0, float X1 , float Y1);
+void            ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color);
 void            ft_wall_casting(int col, float angle, int wasVert, float wallx, float wally);
 void            ft_image_settings();
 #endif
