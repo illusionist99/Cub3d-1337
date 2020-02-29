@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/02/29 01:39:58 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/02/29 01:50:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,10 @@ float    ft_Wall_Hit(int col, float rayAngle)
 		}
 	}
 
-	float horzHitDistance = ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY);
-    float vertHitDistance = ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY);
+	float horzHitDistance = (foundHorzWallHit) ? ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+	 : INT_MAX;
+    float vertHitDistance = (foundVertWallHit) ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+	 : INT_MAX;
 
 	float wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
 	float wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;

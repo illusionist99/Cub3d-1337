@@ -60,7 +60,7 @@ int    ft_update()
     ft_draw_map();
     ft_draw_player();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);
-    //mlx_destroy_image(mlx.mlx, image.ptr);
+    mlx_destroy_image(mlx.mlx, image.ptr);
     return (1);
 }
 
