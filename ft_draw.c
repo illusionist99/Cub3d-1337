@@ -67,7 +67,7 @@ void    ft_draw_cube(int  x, int y)
         j = 0;
         while (j < TILE_SIZE)
         {
-            //ft_pixel_put(x + i, y + j, 16777215);
+            ft_pixel_put((x + i) * MINIMAP_SCALE, (y + j) * MINIMAP_SCALE, 16777215);
             j++;
         }
         i++;

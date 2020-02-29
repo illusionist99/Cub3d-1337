@@ -22,9 +22,9 @@
 # define    WINDOW_WIDTH    900
 # define    WINDOW_HEIGHT   900
 # define    TILE_SIZE       32
-
-# define    WHITE     16777215
-# define    RED       9830400
+# define    MINIMAP_SCALE   0.3
+# define    WHITE           16777215
+# define    RED             9830400
 
 # define    TRUE        1
 # define    FALSE       0
@@ -102,11 +102,25 @@ typedef struct s_ray
 	int         left;
 }               t_ray;
 
-t_ray       ray;
-t_data      data;
-t_mlx       mlx;
-t_player    player;
-t_image     image;
+typedef struct s_pos
+{
+    float       x;
+    float       y;
+    float       distance;
+    int         wasHitVertical;
+}               t_pos;
+
+
+t_ray           ray;
+t_data          data;
+t_mlx           mlx;
+t_player        player;
+t_image         image;
+t_pos           wallhit;
+t_image         north;
+t_image         west;
+t_image         south;
+t_image         east;
 
 void	        set_hooks();
 int             ft_update();
@@ -115,7 +129,7 @@ int             ft_read_map(char **str);
 unsigned int    rgb_to_int(unsigned int r, unsigned int g, unsigned int b);
 void            ft_draw_map(void);
 void            ft_draw_player(void);
-float           ft_Wall_Hit(int col, float rayAngle);
+void           ft_Wall_Hit(int col, float rayAngle);
 int             ft_hasWall(float x, float y);
 float           ft_normalizeAngle(float *angle);
 void            ft_draw_line(float X0, float Y0, float X1 , float Y1);

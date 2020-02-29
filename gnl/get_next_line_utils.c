@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 18:36:49 by malaoui           #+#    #+#             */
-/*   Updated: 2019/10/30 10:04:28 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/02/29 15:10:24 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ size_t		ft_strlen(const char *s)
 	size_t i;
 
 	i = 0;
-	while (s[i] != '\0')
-		i++;
+	if (s)
+		while (s[i] != '\0')
+			i++;
 	return (i);
 }
 

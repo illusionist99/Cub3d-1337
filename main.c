@@ -16,7 +16,7 @@ void    init_player()
     player.turnDirection = 0;
     player.walkDirection = 0;
     player.rotationAngle = M_PI / 2;
-    player.moveSpeed = 4;
+    player.moveSpeed = 3.25;
     player.rotationSpeed = 3 * (M_PI / 180);
     player.fov = 60 * (M_PI / 180);
     data.nb_of_rows = ft_strlen(data.map[0]);
@@ -66,10 +66,19 @@ int    ft_update()
 
 void    init_textures()
 {
-    t_image north;
-    t_image west;
-    t_image south;
-    t_image east;
+    printf("%s | %s | %s |%s\n", data.Path.north , data.Path.east, data.Path.west, data.Path.south);
+    north.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.north , &north.width, &north.height);
+    north.data = (int *)mlx_get_data_addr(north.ptr, &north.bits_per_pixel, &north.size_line, &north.endian);
+
+    // west.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.west, &west.width, &west.height);
+    // west.data = (int *)mlx_get_data_addr(west.ptr, &west.bits_per_pixel, &west.size_line, &west.endian);
+
+    // south.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.south, &south.width, &south.height);
+    // south.data = (int *)mlx_get_data_addr(south.ptr, &south.bits_per_pixel, &south.size_line, &south.endian);
+
+    // east.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.east, &east.width, &east.height);
+    // east.data = (int *)mlx_get_data_addr(east.ptr, &east.bits_per_pixel, &east.size_line, &east.endian);
+
 }
 
 int     main(int argc, char **argv)
@@ -84,11 +93,11 @@ int     main(int argc, char **argv)
         ft_printf("\033[0m[\033[0;32m+\033[0m]");
         ft_printf("\033[0m Getting Data From \033[0;32m [%s] \033[0m!\n", argv[1]);
     }
-    init_player();
-    init_textures();
     if (!(mlx.mlx = mlx_init()))
         return (-1);
     mlx.window = mlx_new_window(mlx.mlx, data.Width, data.Height , "1337 Cub3d");
+    init_player();
+    init_textures();
     set_hooks();
     mlx_loop_hook(mlx.mlx, ft_update, "hi");
     mlx_loop(mlx.mlx);

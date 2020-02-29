@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/02/29 01:50:26 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/02/29 13:34:24 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ float   ft_distanceBetweenPoints(float x1, float y1, float x2, float y2)
     return sqrt(pow(x2 - x1, 2) +  pow(y2 - y1, 2)); 
 } 
 
-float    ft_Wall_Hit(int col, float rayAngle)
+void    ft_Wall_Hit(int col, float rayAngle)
 {
 	float xintercept, yintercept;
 	float xstep, ystep;
@@ -121,10 +121,10 @@ float    ft_Wall_Hit(int col, float rayAngle)
     float vertHitDistance = (foundVertWallHit) ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
 	 : INT_MAX;
 
-	float wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
-	float wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
-	float distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
-	float wasHitVertical = (vertHitDistance < horzHitDistance);
+	wallhit.x = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
+	wallhit.y = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
+	wallhit.distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
+	wallhit.wasHitVertical = (vertHitDistance < horzHitDistance);
 	
 	float distanceProjPlane;
     float raydist;  
@@ -133,18 +133,20 @@ float    ft_Wall_Hit(int col, float rayAngle)
 
     an = rayAngle - player.dirangle;
     ft_normalizeAngle(&an);
-    raydist  = distance * cos(an);
+    raydist  = wallhit.distance * cos(an);
     distanceProjPlane = (data.Width/2) / tan(player.fov/2);
     wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
 
-    float offset = ((wasHitVertical == 0) ? fmod(wallHitX , TILE_SIZE) : fmod(wallHitY, TILE_SIZE));
+    float offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
+	if ((wallhit.x > 0 && wallhit.x < data.Width) && (wallhit.y > 0 && wallhit.y < data.Height))
+	{
+		//ft_handle_texture(col, offset,  data.Height /2 - wallStripHeight/2,  data.Height /2 + wallStripHeight/2, wallStripHeight);
+    	ft_draw_line(col, data.Height/2 - wallStripHeight/2,  col, data.Height/2 + wallStripHeight/2);
 
-    ft_draw_line(col, data.Height/2 - wallStripHeight/2,  col, data.Height/2 + wallStripHeight/2);
-
-    // CEILLING
-    //ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2);
-    // FLOOR
-    //ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height);
-    //ft_draw_line(player.x, player.y, wallHitX , wallHitY);
-    return (distance);
+		// CEILLING
+		//ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2);
+		// FLOOR
+		//ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height);
+    	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE);
+	}
 }
