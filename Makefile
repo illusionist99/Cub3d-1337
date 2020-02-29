@@ -5,10 +5,11 @@ SRC =	ft_gather_data.c\
 		ray.c\
 		main.c\
 		ft_draw.c\
-		ft_intersection.c
+		ft_intersection.c\
+		ft_image.c
 
 
-LIB =	ft_printf/libftprintf.a
+LIB = ft_printf/libftprintf.a
 
 GNL = gnl/get_next_line.c gnl/get_next_line_utils.c
 
@@ -23,7 +24,7 @@ all : $(NAME)
 $(NAME) : 
 		make -C ft_printf/ re
 		make -C minilibx/ re
-		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(OPENGL) -g
+		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(OPENGL) -fsanitize=address -g
 
 clean:
 	rm -f *.o ft_printf/*.o minilibx/*.o

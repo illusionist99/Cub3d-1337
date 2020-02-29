@@ -1,11 +1,19 @@
 #include "libcub3d.h"
 
-void    ft_pixel_put(float x, float y, unsigned int color)
+void    ft_pixel_put(float x, float y, int color)
 {
-    if (x < 0|| x > data.Width || y < 0 || y > data.Height)
+    if ((x > 0 && x < data.Width) && (y > 0 && y < data.Height))
+        image.data[((int)x +  ((int)y) * data.Height)] = color;
+    else
         return ;
-    mlx_pixel_put(mlx.mlx, mlx.window, x, y, color);
 }
+
+// void    ft_pixel_put(float x, float y, unsigned int color)
+// {
+//     if (x < 0|| x > data.Width || y < 0 || y > data.Height)
+//         return ;
+//     mlx_pixel_put(mlx.mlx, mlx.window, x, y, color);
+// }
 
 void    ft_draw_line(float X0, float Y0, float X1 , float Y1)
 {
@@ -39,7 +47,6 @@ void    ft_draw_player(void)
     col = 0;
     j = player.dirangle - (player.fov)/2;
     i = player.fov/data.Width;
-    ft_normalizeAngle(&j);
     while (col < data.Width)
     {
         ft_normalizeAngle(&j);
@@ -60,7 +67,7 @@ void    ft_draw_cube(int  x, int y)
         j = 0;
         while (j < TILE_SIZE)
         {
-            //mlx_pixel_put(mlx.mlx, mlx.window, x + i, y + j, 16777215);
+            //ft_pixel_put(x + i, y + j, 16777215);
             j++;
         }
         i++;

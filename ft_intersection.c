@@ -6,21 +6,12 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/02/28 22:21:25 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/02/29 01:39:58 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libcub3d.h"
 
-typedef struct s_ray
-{
-	int down;
-	int up;
-	int right;
-	int left;
-}               t_ray;
-
-t_ray ray;
 
 void    init_ray()
 {
@@ -33,11 +24,10 @@ void    init_ray()
 void    RayFacing(float angle)
 {
 	init_ray();
-	ray.down = angle > 0 && angle < M_PI;
+	ray.down = (angle > 0 && angle < M_PI);
 	ray.up = !ray.down;
-	ray.right = angle < 0.5 * M_PI || angle > 1.5 * M_PI;
+	ray.right = (angle < 0.5 * M_PI || angle > 1.5 * M_PI);
 	ray.left = !ray.right;
-
 }
 
 
@@ -74,13 +64,16 @@ float    ft_Wall_Hit(int col, float rayAngle)
 	if (ray.up)
 		nextHorzTouchY--;
 
-	while (nextHorzTouchX >= 0 && nextHorzTouchX < data.Width && nextHorzTouchY >= 0 && nextHorzTouchY < data.Height) {
-		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY)) {
+	while (nextHorzTouchX >= 0 && nextHorzTouchX <= data.Width && nextHorzTouchY >= 0 && nextHorzTouchY <= data.Height) {
+		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY))
+		{
 			foundHorzWallHit = TRUE;
 			horzWallHitX = nextHorzTouchX;
 			horzWallHitY = nextHorzTouchY;
 			break;
-		} else {
+		}
+		else
+		{
 			nextHorzTouchX += xstep;
 			nextHorzTouchY += ystep;
 		}
@@ -108,24 +101,23 @@ float    ft_Wall_Hit(int col, float rayAngle)
 	if (ray.left)
 		nextVertTouchX--;
 
-	while ((nextVertTouchX > 0 && nextVertTouchX < data.Width) && (nextVertTouchY > 0  && nextVertTouchY < data.Height)) {
-		if (!ft_hasWall(nextVertTouchX, nextVertTouchY)) {
+	while ((nextVertTouchX >= 0 && nextVertTouchX <= data.Width) && (nextVertTouchY >= 0  && nextVertTouchY <= data.Height)) {
+		if (!ft_hasWall(nextVertTouchX, nextVertTouchY))
+		{
 			foundVertWallHit = TRUE;
 			vertWallHitX = nextVertTouchX;
 			vertWallHitY = nextVertTouchY;
 			break;
-		} else {
+		}
+		else
+		{
 			nextVertTouchX += xstep;
 			nextVertTouchY += ystep;
 		}
 	}
 
-	float horzHitDistance = (foundHorzWallHit)
-            ? ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
-            : INT_MAX;
-    float vertHitDistance = (foundVertWallHit)
-            ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
-            : INT_MAX;
+	float horzHitDistance = ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY);
+    float vertHitDistance = ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY);
 
 	float wallHitX = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
 	float wallHitY = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;

@@ -31,8 +31,8 @@
 
 typedef struct s_mlx
 {
-    void    *mlx;
-    void    *window;
+    void        *mlx;
+    void        *window;
 }               t_mlx;
 
 typedef struct s_color
@@ -46,27 +46,39 @@ typedef struct s_color
 
 typedef struct s_texture
 {
-    char *north;
-    char *south;
-    char *west;
-    char *east;
-    char *sprite;
+    char        *north;
+    char        *south;
+    char        *west;
+    char        *east;
+    char        *sprite;
 }               t_texture;
 
 
 typedef struct s_player
 {
-    int     walkDirection;
-    int     turnDirection;
-    int     radius;
-    float   rotationAngle;
-    float   moveSpeed;
-    float   rotationSpeed;
-    float   fov;
-    float   dirangle;
-    int     x;
-    int     y;
+    int         walkDirection;
+    int         turnDirection;
+    int         radius;
+    float       rotationAngle;
+    float       moveSpeed;
+    float       rotationSpeed;
+    float       fov;
+    float       dirangle;
+    float       x;
+    float       y;
 }               t_player;
+
+typedef struct s_image
+{
+    int         width;
+    int         height;
+    int         bits_per_pixel;
+    int         size_line;
+    int         endian;
+    void        *ptr;
+    int         *data;
+}               t_image;
+
 
 typedef struct s_data
 {
@@ -78,15 +90,27 @@ typedef struct s_data
     char        *map[50];
     int         cols;
     int         index;
+    int         nb_of_rows;
+    int         nb_of_cols;
 }               t_data;
 
+typedef struct s_ray
+{
+	int         down;
+	int         up;
+	int         right;
+	int         left;
+}               t_ray;
+
+t_ray       ray;
 t_data      data;
 t_mlx       mlx;
 t_player    player;
-
+t_image     image;
 
 void	        set_hooks();
 int             ft_update();
+void            ft_pixel_put(float x, float y, int color);
 int             ft_read_map(char **str);
 unsigned int    rgb_to_int(unsigned int r, unsigned int g, unsigned int b);
 void            ft_draw_map(void);
@@ -96,4 +120,5 @@ int             ft_hasWall(float x, float y);
 float           ft_normalizeAngle(float *angle);
 void            ft_draw_line(float X0, float Y0, float X1 , float Y1);
 void            ft_wall_casting(int col, float angle, int wasVert, float wallx, float wally);
+void            ft_image_settings();
 #endif
