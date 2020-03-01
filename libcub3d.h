@@ -127,6 +127,7 @@ t_mlx           mlx;
 t_player        player;
 t_image         image;
 t_pos           wallhit;
+t_pos           Texhit;
 t_image         north;
 t_image         west;
 t_image         south;

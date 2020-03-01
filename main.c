@@ -59,7 +59,6 @@ int    ft_update()
     ft_image_settings();
     ft_position_update();
     ft_draw_map();
-    init_sprites();
     ft_draw_player();
     ft_drawmap();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);

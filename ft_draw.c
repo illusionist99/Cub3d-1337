@@ -44,10 +44,10 @@ void    ft_draw_player(void)
     {
         ft_normalizeAngle(&j);
         ft_Wall_Hit(col, j);
-        //ft_draw_sprites(col ,j);
         col++;
         j += i;
     }
+    init_sprites();
 }
 
 void    ft_draw_cube(int x, int y)
