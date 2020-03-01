@@ -19,10 +19,8 @@
 # define    KEY_DOWN  125
 # define    KEY_UP    126
 
-# define    WINDOW_WIDTH    900
-# define    WINDOW_HEIGHT   900
-# define    TILE_SIZE       32
-# define    MINIMAP_SCALE   0.3
+# define    TILE_SIZE       64
+# define    MINIMAP_SCALE   data.Width * 0.00009
 # define    WHITE           16777215
 # define    RED             9830400
 # define    SKY 	        1008890
@@ -95,6 +93,7 @@ typedef struct s_data
     int         index;
     int         nb_of_rows;
     int         nb_of_cols;
+    int         nb_of_sprites;
 }               t_data;
 
 typedef struct s_ray
@@ -113,10 +112,12 @@ typedef struct s_pos
     int         wasHitVertical;
 }               t_pos;
 
-// typedef struct s_sprites
-// {
-
-// }              t_sprites;
+typedef struct s_sprites
+{
+    float       x;
+    float       y;
+    float       distance;
+}               t_sprites;
 
 
 
@@ -130,18 +131,25 @@ t_image         north;
 t_image         west;
 t_image         south;
 t_image         east;
+t_image         sprite;
+t_sprites       s_data[50];
 
 void	        set_hooks();
 int             ft_update();
-void            ft_pixel_put(int x, int y, unsigned int color);
+void            ft_pixel_put(float x, float y, unsigned int color);
 int             ft_read_map(char **str);
 unsigned int    rgb_to_int(unsigned int r, unsigned int g, unsigned int b);
 void            ft_draw_map(void);
 void            ft_draw_player(void);
-void           ft_Wall_Hit(int col, float rayAngle);
+void            ft_Wall_Hit(int col, float rayAngle);
 int             ft_hasWall(float x, float y);
 float           ft_normalizeAngle(float *angle);
 void            ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color);
 void            ft_wall_casting(int col, float angle, int wasVert, float wallx, float wally);
 void            ft_image_settings();
+void            ft_draw_cube(int  x, int y);
+void	        ft_drawmap();
+float           ft_distanceBetweenPoints(float x1, float y1, float x2, float y2);
+void            init_sprites();
+void            ft_draw_sprites(int col, float j);
 #endif

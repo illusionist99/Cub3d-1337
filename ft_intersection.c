@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/02/29 22:58:14 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/01 18:59:16 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void    init_ray()
 void    RayFacing(float angle)
 {
 	init_ray();
-	ft_normalizeAngle(&angle);
 	ray.down = (angle > 0 && angle < M_PI);
 	ray.up = !ray.down;
 	ray.right = (angle < 0.5 * M_PI || angle > 1.5 * M_PI);
@@ -101,7 +100,7 @@ void    ft_Wall_Hit(int col, float rayAngle)
 
 	int Width = data.nb_of_rows * TILE_SIZE;
 	int Height = data.nb_of_cols * TILE_SIZE;
-	while (nextHorzTouchX >= 0 && nextHorzTouchX < Width && nextHorzTouchY >= 0 && nextHorzTouchY < Height)
+	while (nextHorzTouchX >= 0 && nextHorzTouchX <= Width && nextHorzTouchY >= 0 && nextHorzTouchY <= Height)
 	{
 		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY))
 		{
@@ -139,7 +138,7 @@ void    ft_Wall_Hit(int col, float rayAngle)
 	if (ray.left)
 		nextVertTouchX--;
 
-	while ((nextVertTouchX >= 0 && nextVertTouchX < Width) && (nextVertTouchY >= 0  && nextVertTouchY < Height)) {
+	while ((nextVertTouchX >= 0 && nextVertTouchX <= Width) && (nextVertTouchY >= 0  && nextVertTouchY <= Height)) {
 		if (!ft_hasWall(nextVertTouchX, nextVertTouchY))
 		{
 			foundVertWallHit = TRUE;
@@ -170,76 +169,72 @@ void    ft_Wall_Hit(int col, float rayAngle)
     float wallStripHeight;
 
     an = rayAngle - player.dirangle;
-    ft_normalizeAngle(&an);
     raydist  = wallhit.distance * cos(an);
     distanceProjPlane = (data.Width/2) / tan(player.fov/2);
     wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
 
     float offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
 
-		ft_handle_texture(col, offset,  data.Height /2 - wallStripHeight/2,  data.Height /2 + wallStripHeight/2, wallStripHeight);
-		// float start = data.Height /2 - wallStripHeight/2;
-		// float end = data.Height /2 + wallStripHeight/2;
-		// if (ray.down)
-		// {
-		// 	float texture_y = 0;
-		// 	float step = (float )(west.height/(end - start));
+		//ft_handle_texture(col, offset,  data.Height /2 - wallStripHeight/2,  data.Height /2 + wallStripHeight/2, wallStripHeight);
+		float start = data.Height /2 - wallStripHeight/2;
+		float end = data.Height /2 + wallStripHeight/2;
+	
+		if (ray.down && !wallhit.wasHitVertical)
+		{
+			float texture_y = 0;
+			float step = (float )(west.height/(end - start));
 
-		// 	while (start < end)
-		// 	{
-		// 	//printf("col : %d | Sttart %f \n", col, start);
-		// 		ft_pixel_put(col, start, west.data[(int)(texture_y) * west.height + (int)offset]);
-		// 		texture_y += step;
-		// 		start++;
-		// 	}	
-		// }
-		// else if (ray.left)
-		// {
-		// 	float texture_y = 0;
-		// 	float step = (float )(east.height/(end - start));
+			while (start <= end)
+			{
+				if ((int)(texture_y) * west.height + (int)offset < 64*64)
+					ft_pixel_put(col, start, west.data[(int)(texture_y) * west.height + (int)offset]);
+				texture_y += step;
+				start++;
+			}	
+		}
+		else if (ray.left && wallhit.wasHitVertical)
+		{
+			float texture_y = 0;
+			float step = (float )(east.height/(end - start));
 
-		// 	while (start < end)
-		// 	{
-		// 	//printf("col : %d | Sttart %f \n", col, start);
-		// 		ft_pixel_put(col, start, east.data[(int)(texture_y) * east.height + (int)offset]);
-		// 		texture_y += step;
-		// 		start++;
-		// 	}	
+			while (start <= end)
+			{
+				if ((int)(texture_y) * east.height + (int)offset < 64*64)
+					ft_pixel_put(col, start, east.data[(int)(texture_y) * east.height + (int)offset]);
+				texture_y += step;
+				start++;
+			}	
 			
-		// }
-		// else if (ray.right)
-		// {
-		// 	float texture_y = 0;
-		// 	float step = (float )(south.height/(end - start));
+		}
+		else if (ray.right && wallhit.wasHitVertical)
+		{
+			float texture_y = 0;
+			float step = (float )(south.height/(end - start));
 
-		// 	while (start < end)
-		// 	{
-		// 	//printf("col : %d | Sttart %f \n", col, start);
-		// 		ft_pixel_put(col, start, south.data[(int)(texture_y) * south.height + (int)offset]);
-		// 		texture_y += step;
-		// 		start++;
-		// 	}	
+			while (start <= end)
+			{
+				if ((int)(texture_y) * south.height + (int)offset < 64*64)
+					ft_pixel_put(col, start, south.data[(int)(texture_y) * south.height + (int)offset]);
+				texture_y += step;
+				start++;
+			}	
 
-		// }
-		// else if (ray.up)
-		// {
-		// 	float texture_y = 0;
-		// 	float step = (float )(north.height/(end - start));
+		}
+		else if (ray.up && !wallhit.wasHitVertical)
+		{
+			float texture_y = 0;
+			float step = (float )(north.height/(end - start));
 
-		// 	while (start < end)
-		// 	{
-		// 	//printf("col : %d | Sttart %f \n", col, start);
-		// 		ft_pixel_put(col, start, north.data[(int)(texture_y) * north.height + (int)offset]);
-		// 		texture_y += step;
-		// 		start++;
-		// 	}	
+			while (start <= end)
+			{
+				if ((int)(texture_y) * north.height + (int)offset < 64*64)
+					ft_pixel_put(col, start, north.data[(int)(texture_y) * north.height + (int)offset]);
+				texture_y += step;
+				start++;
+			}	
 			
-		// }
-    	//ft_draw_line(col, data.Height/2 - wallStripHeight/2,  col, data.Height/2 + wallStripHeight/2);
-
-		// CEILLING
+		}
 		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2, SKY);
-		// FLOOR
 		ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height, FLOOR);
     	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE, WHITE);
 }

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/02/29 16:32:33 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:22:54 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void    ft_sprite_path(char *str)
     if (str[i] == 'S')
     {
         i++;
-        data.Path.sprite = ft_strdup(str + i);
+        data.Path.sprite = ft_strdup(str + i + 3);
+        printf("%s\n", data.Path.sprite);
     }
 }
 
