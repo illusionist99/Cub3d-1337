@@ -1,10 +1,58 @@
 #include "libcub3d.h"
 
-void            ft_sort_sprites()
+void    render_spt(int x, int y, int sp_size, int k)
 {
+    int color;
+    int a;
     int i;
     int j;
-    float temp;
+
+    i = 0;
+    color = 0;
+    while (i++ < sp_size)
+    {
+        if (x + i < 0 || x + i > data.Width)
+            continue;
+        if (s_data[k].distance > ray_distance[x + i])
+            continue;
+        j = 0;
+        while (j++ < sp_size)
+        {
+            if (y + j < 0 || y + j > data.Height)
+				continue ;
+            if ((int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size)) < 64 * 64)
+                color = sprite.data[(int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size))];
+            if (color != 0)
+                ft_pixel_put(x + i, y + j, color);
+        }
+    }
+}
+void    ft_sprite(int i)
+{
+    float   sp_size;
+    float   x_inter;
+    float   y_inter;
+    float   sp_angle;
+
+    sp_angle = atan2(s_data[i].y - player.y, s_data[i].x - player.x);
+    while (sp_angle - player.dirangle > M_PI)
+		sp_angle -= 2 * M_PI;
+	while (sp_angle - player.dirangle < -M_PI)
+		sp_angle += 2 * M_PI;
+    if (data.Height > data.Width)
+        sp_size = (data.Height / s_data[i].distance) * TILE_SIZE;
+    else
+        sp_size = (data.Width / s_data[i].distance) * TILE_SIZE;
+    y_inter = data.Height / 2 - sp_size / 2;
+    x_inter = (sp_angle - player.dirangle) * data.Width / player.fov + (data.Width / 2 - sp_size / 2);
+    render_spt(x_inter, y_inter, sp_size, i);
+}
+
+void            ft_sort_sprites()
+{
+    int     i;
+    int     j;
+    float   temp;
 
     i = 0;
     temp = 0;
@@ -23,13 +71,7 @@ void            ft_sort_sprites()
         }
         i++;
     }
-    i = 0;
-    while (i < data.nb_of_sprites)
-    {   
-        ft_sprite(i);
-        i++;
-    }
-   //ft_sprite();
+
 }
 
 void            init_sprites()
@@ -46,16 +88,16 @@ void            init_sprites()
         j = 0;
         while (data.map[i][j] != '\0')
         {
+            if (k >= data.nb_of_sprites)
+                k = 0;
             if (data.map[i][j] == '2')
             {
                 s_data[k].x = j * TILE_SIZE;
                 s_data[k].y = i * TILE_SIZE;
-                s_data[k].distance = ft_distanceBetweenPoints(player.x, player.y, s_data[k].x, s_data[k].y);
                 k++;
             }
             j++;
         }
         i++;
     }
-    ft_sort_sprites();
 }

@@ -119,7 +119,7 @@ typedef struct s_sprites
     float       distance;
 }               t_sprites;
 
-
+float           ray_distance[2560];
 
 t_ray           ray;
 t_data          data;
@@ -152,5 +152,7 @@ void            ft_draw_cube(int  x, int y);
 void	        ft_drawmap();
 float           ft_distanceBetweenPoints(float x1, float y1, float x2, float y2);
 void            init_sprites();
-void            ft_draw_sprites(int col, float j);
+void            ft_sprite(int i);
+void            ft_draw_sprites(void);
+void            ft_sort_sprites();
 #endif

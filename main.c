@@ -25,6 +25,20 @@ void    init_player()
     data.nb_of_sprites = 0;
 }
 
+int     ft_hasWall_tex(float pos_x, float pos_y)
+{
+    int x;
+    int y;
+
+    x = (int )floor(pos_x / TILE_SIZE);
+    y = (int )floor(pos_y / TILE_SIZE);
+    if (x < 0 || x >= data.nb_of_rows || y < 0 || y >= data.nb_of_cols)
+        return (1);
+    else if (data.map[y][x] == '1' || data.map[y][x] == '2')
+        return (0);
+    return (1);
+}
+
 int     ft_hasWall(float pos_x, float pos_y)
 {
     int x;
@@ -48,11 +62,17 @@ void    ft_position_update()
     float newPlayerX = player.x + cos(player.dirangle) * moveStep;
     float newPlayerY = player.y + sin(player.dirangle) * moveStep;
 
-    if (ft_hasWall(player.x + cos(player.dirangle) * moveStep * 10, player.y + sin(player.dirangle) * moveStep * 10))
+    if (ft_hasWall_tex(player.x + cos(player.dirangle) * moveStep * 3, player.y + sin(player.dirangle) * moveStep * 3))
     {
         player.x = newPlayerX;
         player.y = newPlayerY;
     }
+    else if (ft_hasWall(player.x + cos(player.dirangle) * moveStep * 10, player.y + sin(player.dirangle) * moveStep * 10))
+    {
+        player.x = newPlayerX;
+        player.y = newPlayerY;
+    }
+    
 }
 int    ft_update()
 {
@@ -60,6 +80,7 @@ int    ft_update()
     ft_position_update();
     ft_draw_map();
     ft_draw_player();
+    ft_draw_sprites();
     ft_drawmap();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);
     mlx_destroy_image(mlx.mlx, image.ptr);
@@ -107,6 +128,7 @@ int     main(int argc, char **argv)
     mlx.window = mlx_new_window(mlx.mlx, data.Width, data.Height , "1337 Cub3d");
     init_player();
     init_textures();
+    init_sprites();
     set_hooks();
     mlx_loop_hook(mlx.mlx, ft_update, "hi");
     mlx_loop(mlx.mlx);

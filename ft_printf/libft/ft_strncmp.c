@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malaoui <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 18:25:41 by malaoui           #+#    #+#             */
-/*   Updated: 2019/10/17 18:33:00 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/03 16:13:32 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	*p2;
 
 	i = 0;
+	if (s1 == NULL)
+		s1 = ft_strdup("");
 	p1 = (unsigned char *)s1;
 	p2 = (unsigned char *)s2;
 	if (n == 0)

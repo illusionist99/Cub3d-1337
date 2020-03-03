@@ -20,12 +20,14 @@ OPENGL =  -framework OpenGL -framework AppKit  -Ofast
 
 MLIB = minilibx/libmlx.a
 
+SEV = -fsanitize=address
+
 all : $(NAME)
 
 $(NAME) : 
 		make -C ft_printf/ re
 		make -C minilibx/ re
-		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(OPENGL) -lm -fsanitize=address  -g
+		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(OPENGL) -lm   -g
 
 clean:
 	rm -f *.o ft_printf/*.o minilibx/*.o

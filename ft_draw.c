@@ -32,22 +32,40 @@ void    ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color
 
 void    ft_draw_player(void)
 {
-    float   i;
-    float   j;
+    float   angle_inc;
+    float   angle;
     int     col;
 
 
     col = 0;
-    j = player.dirangle - (player.fov)/2;
-    i = player.fov/data.Width;
+    angle = player.dirangle - (player.fov)/2;
+    angle_inc = player.fov/data.Width;
     while (col < data.Width)
     {
-        ft_normalizeAngle(&j);
-        ft_Wall_Hit(col, j);
+        ft_normalizeAngle(&angle);
+        ft_Wall_Hit(col, angle);
         col++;
-        j += i;
+        angle += angle_inc;
     }
-    init_sprites();
+}
+void    ft_draw_sprites(void)
+{
+    int i, j;
+    i = 0;
+    j = 0;
+
+    while (i < data.nb_of_sprites)
+    {
+        s_data[i].distance = ft_distanceBetweenPoints(player.x, player.y, s_data[i].x, s_data[i].y);
+        i++;
+    }
+    ft_sort_sprites();
+    i = 0;
+    while (i < data.nb_of_sprites)
+    {
+       ft_sprite(i);
+        i++;
+    }
 }
 
 void    ft_draw_cube(int x, int y)

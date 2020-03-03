@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/01 18:59:16 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/03 18:29:40 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,12 @@ void    ft_Wall_Hit(int col, float rayAngle)
 
     an = rayAngle - player.dirangle;
     raydist  = wallhit.distance * cos(an);
+	ray_distance[col] = raydist;
     distanceProjPlane = (data.Width/2) / tan(player.fov/2);
     wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
-
+	
     float offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
 
-		//ft_handle_texture(col, offset,  data.Height /2 - wallStripHeight/2,  data.Height /2 + wallStripHeight/2, wallStripHeight);
 		float start = data.Height /2 - wallStripHeight/2;
 		float end = data.Height /2 + wallStripHeight/2;
 	
@@ -234,7 +234,7 @@ void    ft_Wall_Hit(int col, float rayAngle)
 			}	
 			
 		}
-		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2, SKY);
-		ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height, FLOOR);
+		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2, data.ceilling.color);
+		ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height, data.floor.color);
     	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE, WHITE);
 }
