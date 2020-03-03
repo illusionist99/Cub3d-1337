@@ -13,13 +13,11 @@ void    render_spt(int x, int y, int sp_size, int k)
     {
         if (x + i < 0 || x + i > data.Width)
             continue;
-        if (s_data[k].distance > ray_distance[x + i])
+        if (s_data[k].distance >= ray_distance[x + i])
             continue;
         j = 0;
         while (j++ < sp_size)
         {
-            if (y + j < 0 || y + j > data.Height)
-				continue ;
             if ((int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size)) < 64 * 64)
                 color = sprite.data[(int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size))];
             if (color != 0)
@@ -44,7 +42,7 @@ void    ft_sprite(int i)
     else
         sp_size = (data.Width / s_data[i].distance) * TILE_SIZE;
     y_inter = data.Height / 2 - sp_size / 2;
-    x_inter = (sp_angle - player.dirangle) * data.Width / player.fov + (data.Width / 2 - sp_size / 2);
+    x_inter = (sp_angle - player.dirangle) / player.fov * data.Width + (data.Width / 2 - sp_size / 2);
     render_spt(x_inter, y_inter, sp_size, i);
 }
 
@@ -52,20 +50,19 @@ void            ft_sort_sprites()
 {
     int     i;
     int     j;
-    float   temp;
+    t_sprites   temp;
 
     i = 0;
-    temp = 0;
-    while (i < data.nb_of_sprites - 1)
+    while (i < data.nb_of_sprites)
     {
         j = 0;
-        while (j < data.nb_of_sprites - i - 1)
+        while (j < data.nb_of_sprites - 1)
         {
-            if (s_data[j].distance > s_data[j + 1].distance)
+            if (s_data[j].distance < s_data[j + 1].distance)
             {
-                temp = s_data[j].distance;
-                s_data[j].distance = s_data[j + 1].distance;
-                s_data[j + 1].distance = temp;
+                temp = s_data[j];
+                s_data[j] = s_data[j + 1];
+                s_data[j + 1] = temp;
             }
             j++;
         }

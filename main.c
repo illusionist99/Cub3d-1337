@@ -76,9 +76,9 @@ int    ft_update()
     if (image.ptr)
         mlx_destroy_image(mlx.mlx, image.ptr);
     ft_image_settings();
+    ft_position_update();
     ft_draw_map();
     ft_draw_player();
-    ft_position_update();
     ft_draw_sprites();
     ft_drawmap();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);

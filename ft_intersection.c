@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/03 23:36:23 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/03 23:57:16 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 	wallhit.y = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
 	wallhit.distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
 	wallhit.wasHitVertical = (vertHitDistance < horzHitDistance);
-	
+	ray_distance[col] = wallhit.distance;
 	double distanceProjPlane;
     double raydist;  
     double an;
@@ -166,7 +166,6 @@ void    ft_Wall_Hit(int col, double rayAngle)
 
     an = rayAngle - player.dirangle;
     raydist  = wallhit.distance * cos(an);
-	ray_distance[col] = raydist;
     distanceProjPlane = (data.Width/2) / tan(player.fov/2);
     wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
 	
