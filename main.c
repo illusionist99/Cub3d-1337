@@ -12,12 +12,10 @@ int     ft_map_cols(char **map)
 
 void    init_player()
 {
-    player.radius = 4;
     player.turnDirection = 0;
     player.walkDirection = 0;
-    player.rotationAngle = M_PI / 2;
     player.moveSpeed = 4;
-    player.rotationSpeed = 3 * (M_PI / 180);
+    player.rotationSpeed = 2 * (M_PI / 180);
     player.fov = 66 * (M_PI / 180);
     data.nb_of_rows = ft_strlen(data.map[0]);
     // change name
@@ -25,7 +23,7 @@ void    init_player()
     data.nb_of_sprites = 0;
 }
 
-int     ft_hasWall_tex(float pos_x, float pos_y)
+int     ft_hasWall_tex(double pos_x, double pos_y)
 {
     int x;
     int y;
@@ -34,12 +32,12 @@ int     ft_hasWall_tex(float pos_x, float pos_y)
     y = (int )floor(pos_y / TILE_SIZE);
     if (x < 0 || x >= data.nb_of_rows || y < 0 || y >= data.nb_of_cols)
         return (1);
-    else if (data.map[y][x] == '1' || data.map[y][x] == '2')
+    else if (data.map[y][x] == '2')
         return (0);
     return (1);
 }
 
-int     ft_hasWall(float pos_x, float pos_y)
+int     ft_hasWall(double pos_x, double pos_y)
 {
     int x;
     int y;
@@ -57,33 +55,33 @@ void    ft_position_update()
 {
     player.dirangle += player.turnDirection * player.rotationSpeed;
 
-    float moveStep = player.walkDirection * player.moveSpeed;
+    double moveStep = player.walkDirection * player.moveSpeed;
 
-    float newPlayerX = player.x + cos(player.dirangle) * moveStep;
-    float newPlayerY = player.y + sin(player.dirangle) * moveStep;
+    double newPlayerX = player.x + cos(player.dirangle) * moveStep;
+    double newPlayerY = player.y + sin(player.dirangle) * moveStep;
 
-    if (ft_hasWall_tex(player.x + cos(player.dirangle) * moveStep * 3, player.y + sin(player.dirangle) * moveStep * 3))
+    if (ft_hasWall(player.x + cos(player.dirangle) * moveStep * 10, player.y + sin(player.dirangle) * moveStep * 10))
     {
-        player.x = newPlayerX;
-        player.y = newPlayerY;
-    }
-    else if (ft_hasWall(player.x + cos(player.dirangle) * moveStep * 10, player.y + sin(player.dirangle) * moveStep * 10))
-    {
-        player.x = newPlayerX;
-        player.y = newPlayerY;
+       
+        if (ft_hasWall_tex(player.x + cos(player.dirangle) * moveStep * 3, player.y + sin(player.dirangle) * moveStep * 3))
+        {
+            player.x = newPlayerX;
+            player.y = newPlayerY;
+        }
     }
     
 }
 int    ft_update()
 {
+    if (image.ptr)
+        mlx_destroy_image(mlx.mlx, image.ptr);
     ft_image_settings();
-    ft_position_update();
     ft_draw_map();
     ft_draw_player();
+    ft_position_update();
     ft_draw_sprites();
     ft_drawmap();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);
-    mlx_destroy_image(mlx.mlx, image.ptr);
     return (1);
 }
 

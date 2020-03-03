@@ -12,7 +12,7 @@ int    key_press_hook(int keyCode, void *ptr)
         player.turnDirection = 1;
     if (keyCode == KEY_LEFT)
         player.turnDirection = -1;
-    return (0);
+    return (1);
 }
 
 int    key_release_hook(int keyCode, void *ptr)
@@ -25,7 +25,7 @@ int    key_release_hook(int keyCode, void *ptr)
         player.turnDirection = 0;
     if (keyCode == KEY_LEFT)
         player.turnDirection = 0;
-    return (0);
+    return (1);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/03 18:29:40 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/03 23:36:23 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void    init_ray()
 	ray.left = 0;
 }
 
-void    RayFacing(float angle)
+void    RayFacing(double angle)
 {
 	init_ray();
 	ray.down = (angle > 0 && angle < M_PI);
@@ -30,20 +30,20 @@ void    RayFacing(float angle)
 }
 
 
-float   ft_distanceBetweenPoints(float x1, float y1, float x2, float y2) 
+double   ft_distanceBetweenPoints(double x1, double y1, double x2, double y2) 
 { 
     return sqrt(pow(x2 - x1, 2) +  pow(y2 - y1, 2)); 
 } 
 
-int        ft_handle_texture(int col, float offset, float start, float end, float wallStripHeight)
+int        ft_handle_texture(int col, double offset, double start, double end, double wallStripHeight)
 {
-    float texture_y = 0;
-    float step = (float )(west.height/(end - start));
+    double texture_y = 0;
+    double step = (double )(west.height/(end - start));
 
     while (start < end)
     {
-			//printf("col : %d | Sttart %f \n", col, start);
-        ft_pixel_put(col, start, west.data[(int)(texture_y) * west.height + (int)offset]);
+		if ((int)(texture_y) * west.height + (int)offset < 64 * 64)
+        	ft_pixel_put(col, start, west.data[(int)(texture_y) * west.height + (int)offset]);
         texture_y += step;
         start++;
     }
@@ -70,18 +70,18 @@ void	ft_drawmap()
 	}
 }
 
-void    ft_Wall_Hit(int col, float rayAngle)
+void    ft_Wall_Hit(int col, double rayAngle)
 {
-	float xintercept, yintercept;
-	float xstep, ystep;
+	double xintercept, yintercept;
+	double xstep, ystep;
 
-	float foundHorzWallHit = FALSE;
-	float horzWallHitX = 0;
-	float horzWallHitY = 0;
+	double foundHorzWallHit = FALSE;
+	double horzWallHitX = 0;
+	double horzWallHitY = 0;
 	
 	RayFacing(rayAngle);
 	yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
-	yintercept += ray.down ? TILE_SIZE : 0;
+	yintercept += ray.down ? TILE_SIZE : -0.00001;
 
 	xintercept = player.x + (yintercept - player.y) / tan(rayAngle);
 
@@ -92,15 +92,12 @@ void    ft_Wall_Hit(int col, float rayAngle)
 	xstep *= (ray.left && xstep > 0) ? -1 : 1;
 	xstep *= (ray.right && xstep < 0) ? -1 : 1;
 
-	float nextHorzTouchX = xintercept;
-	float nextHorzTouchY = yintercept;
-
-	if (ray.up)
-		nextHorzTouchY--;
+	double nextHorzTouchX = xintercept;
+	double nextHorzTouchY = yintercept;
 
 	int Width = data.nb_of_rows * TILE_SIZE;
 	int Height = data.nb_of_cols * TILE_SIZE;
-	while (nextHorzTouchX >= 0 && nextHorzTouchX <= Width && nextHorzTouchY >= 0 && nextHorzTouchY <= Height)
+	while (nextHorzTouchX >= 0 && nextHorzTouchX < Width && nextHorzTouchY >= 0 && nextHorzTouchY < Height)
 	{
 		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY))
 		{
@@ -116,12 +113,13 @@ void    ft_Wall_Hit(int col, float rayAngle)
 		}
 	}
 
-	float foundVertWallHit = FALSE;
-	float vertWallHitX = 0;
-	float vertWallHitY = 0;
+	double foundVertWallHit = FALSE;
+	double vertWallHitX = 0;
+	double vertWallHitY = 0;
 
+	RayFacing(rayAngle);
 	xintercept = floor(player.x / TILE_SIZE) * TILE_SIZE;
-	xintercept += ray.right ? TILE_SIZE : 0;
+	xintercept += ray.right ? TILE_SIZE : -0.00001;
 
 	yintercept = player.y + (xintercept - player.x) * tan(rayAngle);
 
@@ -132,13 +130,11 @@ void    ft_Wall_Hit(int col, float rayAngle)
 	ystep *= (ray.up && ystep > 0) ? -1 : 1;
 	ystep *= (ray.down && ystep < 0) ? -1 : 1;
 
-	float nextVertTouchX = xintercept;
-	float nextVertTouchY = yintercept;
+	double nextVertTouchX = xintercept;
+	double nextVertTouchY = yintercept;
 
-	if (ray.left)
-		nextVertTouchX--;
 
-	while ((nextVertTouchX >= 0 && nextVertTouchX <= Width) && (nextVertTouchY >= 0  && nextVertTouchY <= Height)) {
+	while ((nextVertTouchX >= 0 && nextVertTouchX < Width) && (nextVertTouchY >= 0  && nextVertTouchY < Height)) {
 		if (!ft_hasWall(nextVertTouchX, nextVertTouchY))
 		{
 			foundVertWallHit = TRUE;
@@ -153,9 +149,9 @@ void    ft_Wall_Hit(int col, float rayAngle)
 		}
 	}
 
-	float horzHitDistance = (foundHorzWallHit) ? ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+	double horzHitDistance = (foundHorzWallHit) ? ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
 	 : INT_MAX;
-    float vertHitDistance = (foundVertWallHit) ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+    double vertHitDistance = (foundVertWallHit) ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
 	 : INT_MAX;
 
 	wallhit.x = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
@@ -163,10 +159,10 @@ void    ft_Wall_Hit(int col, float rayAngle)
 	wallhit.distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
 	wallhit.wasHitVertical = (vertHitDistance < horzHitDistance);
 	
-	float distanceProjPlane;
-    float raydist;  
-    float an;
-    float wallStripHeight;
+	double distanceProjPlane;
+    double raydist;  
+    double an;
+    double wallStripHeight;
 
     an = rayAngle - player.dirangle;
     raydist  = wallhit.distance * cos(an);
@@ -174,15 +170,15 @@ void    ft_Wall_Hit(int col, float rayAngle)
     distanceProjPlane = (data.Width/2) / tan(player.fov/2);
     wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
 	
-    float offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
+    double offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
 
-		float start = data.Height /2 - wallStripHeight/2;
-		float end = data.Height /2 + wallStripHeight/2;
+		double start = data.Height /2 - wallStripHeight/2;
+		double end = data.Height /2 + wallStripHeight/2;
 	
 		if (ray.down && !wallhit.wasHitVertical)
 		{
-			float texture_y = 0;
-			float step = (float )(west.height/(end - start));
+			double texture_y = 0;
+			double step = (double )(west.height/(end - start));
 
 			while (start <= end)
 			{
@@ -194,8 +190,8 @@ void    ft_Wall_Hit(int col, float rayAngle)
 		}
 		else if (ray.left && wallhit.wasHitVertical)
 		{
-			float texture_y = 0;
-			float step = (float )(east.height/(end - start));
+			double texture_y = 0;
+			double step = (double )(east.height/(end - start));
 
 			while (start <= end)
 			{
@@ -208,8 +204,8 @@ void    ft_Wall_Hit(int col, float rayAngle)
 		}
 		else if (ray.right && wallhit.wasHitVertical)
 		{
-			float texture_y = 0;
-			float step = (float )(south.height/(end - start));
+			double texture_y = 0;
+			double step = (double )(south.height/(end - start));
 
 			while (start <= end)
 			{
@@ -222,8 +218,8 @@ void    ft_Wall_Hit(int col, float rayAngle)
 		}
 		else if (ray.up && !wallhit.wasHitVertical)
 		{
-			float texture_y = 0;
-			float step = (float )(north.height/(end - start));
+			double texture_y = 0;
+			double step = (double )(north.height/(end - start));
 
 			while (start <= end)
 			{

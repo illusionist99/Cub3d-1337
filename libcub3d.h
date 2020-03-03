@@ -57,16 +57,14 @@ typedef struct s_texture
 
 typedef struct s_player
 {
-    int         walkDirection;
-    int         turnDirection;
-    int         radius;
-    float       rotationAngle;
-    float       moveSpeed;
-    float       rotationSpeed;
-    float       fov;
-    float       dirangle;
-    float       x;
-    float       y;
+    int          walkDirection;
+    int          turnDirection;
+    double       moveSpeed;
+    double       rotationSpeed;
+    double       fov;
+    double       dirangle;
+    double       x;
+    double       y;
 }               t_player;
 
 typedef struct s_image
@@ -106,20 +104,20 @@ typedef struct s_ray
 
 typedef struct s_pos
 {
-    float       x;
-    float       y;
-    float       distance;
+    double       x;
+    double       y;
+    double       distance;
     int         wasHitVertical;
 }               t_pos;
 
 typedef struct s_sprites
 {
-    float       x;
-    float       y;
-    float       distance;
+    double       x;
+    double       y;
+    double       distance;
 }               t_sprites;
 
-float           ray_distance[2560];
+double           ray_distance[2560];
 
 t_ray           ray;
 t_data          data;
@@ -137,20 +135,20 @@ t_sprites       s_data[50];
 
 void	        set_hooks();
 int             ft_update();
-void            ft_pixel_put(float x, float y, unsigned int color);
+void            ft_pixel_put(double x, double y, unsigned int color);
 int             ft_read_map(char **str);
 unsigned int    rgb_to_int(unsigned int r, unsigned int g, unsigned int b);
 void            ft_draw_map(void);
 void            ft_draw_player(void);
-void            ft_Wall_Hit(int col, float rayAngle);
-int             ft_hasWall(float x, float y);
-float           ft_normalizeAngle(float *angle);
-void            ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color);
-void            ft_wall_casting(int col, float angle, int wasVert, float wallx, float wally);
+void            ft_Wall_Hit(int col, double rayAngle);
+int             ft_hasWall(double x, double y);
+double           ft_normalizeAngle(double *angle);
+void            ft_draw_line(double X0, double Y0, double X1 , double Y1, unsigned int color);
+void            ft_wall_casting(int col, double angle, int wasVert, double wallx, double wally);
 void            ft_image_settings();
 void            ft_draw_cube(int  x, int y);
 void	        ft_drawmap();
-float           ft_distanceBetweenPoints(float x1, float y1, float x2, float y2);
+double           ft_distanceBetweenPoints(double x1, double y1, double x2, double y2);
 void            init_sprites();
 void            ft_sprite(int i);
 void            ft_draw_sprites(void);

@@ -1,6 +1,6 @@
 #include "libcub3d.h"
 
-void    ft_pixel_put(float x, float y, unsigned int color)
+void    ft_pixel_put(double x, double y, unsigned int color)
 {
     if ((x >= 0 && x < data.Width) && (y >= 0 && y < data.Height))
         image.data[((int)x +  ((int)y) * data.Height)] = color;
@@ -8,18 +8,18 @@ void    ft_pixel_put(float x, float y, unsigned int color)
 }
 
 
-void    ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color)
+void    ft_draw_line(double X0, double Y0, double X1 , double Y1, unsigned int color)
 {
     int dx = X1 - X0; 
     int dy = Y1 - Y0; 
     int i;
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
   
-    float Xinc = dx / (float) steps; 
-    float Yinc = dy / (float) steps; 
+    double Xinc = dx / (double) steps; 
+    double Yinc = dy / (double) steps; 
   
-    float X = X0; 
-    float Y = Y0;
+    double X = X0; 
+    double Y = Y0;
     i = 0;
     while (i <= steps) 
     {
@@ -32,8 +32,8 @@ void    ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color
 
 void    ft_draw_player(void)
 {
-    float   angle_inc;
-    float   angle;
+    double   angle_inc;
+    double   angle;
     int     col;
 
 
@@ -48,12 +48,12 @@ void    ft_draw_player(void)
         angle += angle_inc;
     }
 }
+
 void    ft_draw_sprites(void)
 {
-    int i, j;
-    i = 0;
-    j = 0;
+    int i;
 
+    i = 0;
     while (i < data.nb_of_sprites)
     {
         s_data[i].distance = ft_distanceBetweenPoints(player.x, player.y, s_data[i].x, s_data[i].y);
@@ -63,7 +63,8 @@ void    ft_draw_sprites(void)
     i = 0;
     while (i < data.nb_of_sprites)
     {
-       ft_sprite(i);
+        printf("%d : %f\n", i,s_data[i].distance);
+        ft_sprite(i);
         i++;
     }
 }
@@ -101,9 +102,7 @@ void ft_draw_map(void)
         {
             if (data.map[i][j] == '1')
                 ft_draw_cube(j * TILE_SIZE , i * TILE_SIZE);
-            if (data.map[i][j] == '2')
-                data.nb_of_sprites++;
-            if ((data.map[i][j] == 'N' || data.map[i][j] == 'W' || data.map[i][j] == 'E' || data.map[i][j] == 'S'))
+            else if ((data.map[i][j] == 'N' || data.map[i][j] == 'W' || data.map[i][j] == 'E' || data.map[i][j] == 'S'))
             {
                     if (data.map[i][j] == 'N')
                         player.dirangle = -(M_PI / 2);
