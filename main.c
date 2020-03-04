@@ -44,7 +44,7 @@ int     ft_hasWall(double pos_x, double pos_y)
 
     x = (int )floor(pos_x / TILE_SIZE);
     y = (int )floor(pos_y / TILE_SIZE);
-    if (x < 0 || x >= data.nb_of_rows || y < 0 || y >= data.nb_of_cols)
+    if (x < 0 || x > data.nb_of_rows || y < 0 || y > data.nb_of_cols)
         return (1);
     else if (data.map[y][x] == '1')
         return (0);
@@ -87,7 +87,6 @@ int    ft_update()
 
 void    init_textures()
 {
-    // printf("%s | %s | %s |%s\n", data.Path.north , data.Path.east, data.Path.west, data.Path.south);
     north.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.north, &north.width, &north.height);
     west.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.west, &west.width, &west.height);
     south.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.south, &south.width, &south.height);
@@ -114,6 +113,7 @@ int     main(int argc, char **argv)
     int i;
 
     i = 0;
+    g_look = 0;
     if (ft_read_map(&argv[1]) == 0)
         return (EXIT_FAILURE);
     else

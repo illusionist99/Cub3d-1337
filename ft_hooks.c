@@ -12,6 +12,10 @@ int    key_press_hook(int keyCode, void *ptr)
         player.turnDirection = 1;
     if (keyCode == KEY_LEFT)
         player.turnDirection = -1;
+    if (keyCode == 13)
+        g_look += 10;
+    if (keyCode == 1) 
+        g_look -= 10;
     return (1);
 }
 

@@ -43,29 +43,29 @@ outfile = fopen(filename, "wb");
 // When printing ints and shorts, we write out 1 character at a time to avoid endian issues.
 //
 
-fprintf(outfile, "BM");
+f//printf(outfile, "BM");
 
 for (n = 0; n <= 5; n++)
 {
-   fprintf(outfile, "%c", headers[n] & 0x000000FF);
-   fprintf(outfile, "%c", (headers[n] & 0x0000FF00) >> 8);
-   fprintf(outfile, "%c", (headers[n] & 0x00FF0000) >> 16);
-   fprintf(outfile, "%c", (headers[n] & (unsigned int) 0xFF000000) >> 24);
+   f//printf(outfile, "%c", headers[n] & 0x000000FF);
+   f//printf(outfile, "%c", (headers[n] & 0x0000FF00) >> 8);
+   f//printf(outfile, "%c", (headers[n] & 0x00FF0000) >> 16);
+   f//printf(outfile, "%c", (headers[n] & (unsigned int) 0xFF000000) >> 24);
 }
 
 // These next 4 characters are for the biPlanes and biBitCount fields.
 
-fprintf(outfile, "%c", 1);
-fprintf(outfile, "%c", 0);
-fprintf(outfile, "%c", 24);
-fprintf(outfile, "%c", 0);
+f//printf(outfile, "%c", 1);
+f//printf(outfile, "%c", 0);
+f//printf(outfile, "%c", 24);
+f//printf(outfile, "%c", 0);
 
 for (n = 7; n <= 12; n++)
 {
-   fprintf(outfile, "%c", headers[n] & 0x000000FF);
-   fprintf(outfile, "%c", (headers[n] & 0x0000FF00) >> 8);
-   fprintf(outfile, "%c", (headers[n] & 0x00FF0000) >> 16);
-   fprintf(outfile, "%c", (headers[n] & (unsigned int) 0xFF000000) >> 24);
+   f//printf(outfile, "%c", headers[n] & 0x000000FF);
+   f//printf(outfile, "%c", (headers[n] & 0x0000FF00) >> 8);
+   f//printf(outfile, "%c", (headers[n] & 0x00FF0000) >> 16);
+   f//printf(outfile, "%c", (headers[n] & (unsigned int) 0xFF000000) >> 24);
 }
 
 //
@@ -87,15 +87,15 @@ for (y = HEIGHT - 1; y >= 0; y--)     // BMP image format is written from bottom
       
       // Also, it's written in (b,g,r) format...
 
-      fprintf(outfile, "%c", blue);
-      fprintf(outfile, "%c", green);
-      fprintf(outfile, "%c", red);
+      f//printf(outfile, "%c", blue);
+      f//printf(outfile, "%c", green);
+      f//printf(outfile, "%c", red);
    }
    if (extrabytes)      // See above - BMP lines must be of lengths divisible by 4.
    {
       for (n = 1; n <= extrabytes; n++)
       {
-         fprintf(outfile, "%c", 0);
+         f//printf(outfile, "%c", 0);
       }
    }
 }

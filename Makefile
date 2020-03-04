@@ -27,10 +27,10 @@ all : $(NAME)
 $(NAME) : 
 		make -C ft_printf/ re
 		make -C minilibx/ re
-		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(SEV) $(OPENGL) -lm  -g
+		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB)  $(OPENGL) -lm  -g
 
 clean:
-	rm -f *.o ft_printf/*.o minilibx/*.o
+	rm -f *.o ft_printf/*.o minilibx/*.o ft_printf/libft/*.o
 
 fclean: clean
 	rm -f $(NAME)

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/01 17:22:54 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/04 18:06:45 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void    ft_sprite_path(char *str)
     {
         i++;
         data.Path.sprite = ft_strdup(str + i + 3);
-        printf("%s\n", data.Path.sprite);
     }
 }
 
@@ -91,26 +90,20 @@ char    *ft_check_map(char *str)
     while (str[i] != '\0')
     {
         if (str[i] == ' ')
-            i++;
-        else
-        {    cpt++;
-            i++;
-        }
+            str[i] = '1';
+        cpt++;
+        i++;
     }
     i = 0;
     s = (char *)malloc(sizeof(char ) * cpt + 1);
     while (str[i] != '\0')
     {
-        if (str[i] == ' ')
-            i++;
-        else
-        {
             s[o] = str[i];
             o++;
             i++;
-        }
     }
     s[o] = '\0';
+    printf("%s\n", s);
     return (s);
 }
 
@@ -142,7 +135,7 @@ int     ft_analyse(char *str)
         data.Path.east = ft_substr(str, 5, ft_strlen(str + 4));
     else if (str[i] == 'S')
         ft_sprite_path(str + i);
-    else if (ft_isdigit(str[i]))
+    else if (ft_isdigit(str[i]) || str[i] == ' ')
         if (ft_get_map(str) != 1)
             return (EXIT_FAILURE);   
     if (data.Width == 0 || data.Height == 0)

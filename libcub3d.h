@@ -133,6 +133,8 @@ t_image         east;
 t_image         sprite;
 t_sprites       s_data[50];
 
+int             g_look;
+
 void	        set_hooks();
 int             ft_update();
 void            ft_pixel_put(double x, double y, unsigned int color);

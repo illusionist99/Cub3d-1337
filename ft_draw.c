@@ -63,7 +63,7 @@ void    ft_draw_sprites(void)
     i = 0;
     while (i < data.nb_of_sprites)
     {
-        printf("%d : %f\n", i,s_data[i].distance);
+        //printf("%d : %f\n", i,s_data[i].distance);
         ft_sprite(i);
         i++;
     }
@@ -112,8 +112,8 @@ void ft_draw_map(void)
                         player.dirangle = 0;
                     if (data.map[i][j] == 'S')
                         player.dirangle = M_PI / 2;
-                    player.x = j * TILE_SIZE;
-                    player.y = i * TILE_SIZE;
+                    player.x = (j + 0.5) * TILE_SIZE;
+                    player.y = (i + 0.5) * TILE_SIZE;
             }
             j++;
         }

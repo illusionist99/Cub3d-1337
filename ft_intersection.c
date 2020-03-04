@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/03 23:57:16 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/04 17:52:35 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,8 @@ void    ft_Wall_Hit(int col, double rayAngle)
 	
     double offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
 
-		double start = data.Height /2 - wallStripHeight/2;
-		double end = data.Height /2 + wallStripHeight/2;
+		double start = data.Height /2 - wallStripHeight/2 + g_look;
+		double end = data.Height /2 + wallStripHeight/2 + g_look;
 	
 		if (ray.down && !wallhit.wasHitVertical)
 		{
@@ -229,7 +229,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 			}	
 			
 		}
-		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2, data.ceilling.color);
-		ft_draw_line(col , data.Height/2 + wallStripHeight/2, col, data.Height, data.floor.color);
+		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2 + g_look, data.ceilling.color);
+		ft_draw_line(col , data.Height/2 + wallStripHeight/2 + g_look, col, data.Height, data.floor.color);
     	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE, WHITE);
 }

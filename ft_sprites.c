@@ -41,7 +41,7 @@ void    ft_sprite(int i)
         sp_size = (data.Height / s_data[i].distance) * TILE_SIZE;
     else
         sp_size = (data.Width / s_data[i].distance) * TILE_SIZE;
-    y_inter = data.Height / 2 - sp_size / 2;
+    y_inter = data.Height / 2 - sp_size / 2 + g_look;
     x_inter = (sp_angle - player.dirangle) / player.fov * data.Width + (data.Width / 2 - sp_size / 2);
     render_spt(x_inter, y_inter, sp_size, i);
 }
