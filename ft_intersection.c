@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/04 17:52:35 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/04 22:10:13 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 
 	int Width = data.nb_of_rows * TILE_SIZE;
 	int Height = data.nb_of_cols * TILE_SIZE;
-	while (nextHorzTouchX >= 0 && nextHorzTouchX < Width && nextHorzTouchY >= 0 && nextHorzTouchY < Height)
+	while (nextHorzTouchX >= 0 && nextHorzTouchX < data.Width && nextHorzTouchY >= 0 && nextHorzTouchY < data.Height)
 	{
 		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY))
 		{
@@ -134,7 +134,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 	double nextVertTouchY = yintercept;
 
 
-	while ((nextVertTouchX >= 0 && nextVertTouchX < Width) && (nextVertTouchY >= 0  && nextVertTouchY < Height)) {
+	while ((nextVertTouchX >= 0 && nextVertTouchX < data.Width) && (nextVertTouchY >= 0  && nextVertTouchY < data.Height)) {
 		if (!ft_hasWall(nextVertTouchX, nextVertTouchY))
 		{
 			foundVertWallHit = TRUE;

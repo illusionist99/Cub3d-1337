@@ -38,9 +38,9 @@ typedef struct s_mlx
 
 typedef struct s_color
 {
-    unsigned int r;
-    unsigned int g;
-    unsigned int b;
+    int r;
+    int g;
+    int b;
 
     unsigned int color;
 }             t_color;
@@ -155,4 +155,5 @@ void            init_sprites();
 void            ft_sprite(int i);
 void            ft_draw_sprites(void);
 void            ft_sort_sprites();
+void            ft_handle_bmp();
 #endif

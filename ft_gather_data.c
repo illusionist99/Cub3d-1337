@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/04 18:06:45 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/04 21:51:38 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,21 @@ void    ft_resolution(char *str)
     if (str[i] == 'R')
     {
         i++;
+        while (str[i] == ' ')
+            i++;
         data.Width = atoi(&str[i]);
-        i++;
+        while (ft_isdigit(str[i]))
+            i++;
+        while (str[i] == ' ')
+            i++;
         data.Height = atoi(&str[i]);
     }
+    if (data.Height < 0 || data.Width < 0)
+        exit(1);
+    if (data.Height >= 1440)
+        data.Height = 1400;
+    if (data.Width >= 2560)
+        data.Width = 2500;
 }
 
 void    ft_sprite_path(char *str)
@@ -34,7 +45,9 @@ void    ft_sprite_path(char *str)
     if (str[i] == 'S')
     {
         i++;
-        data.Path.sprite = ft_strdup(str + i + 3);
+        while (str[i] == ' ' || str[i] == '/' || str[i] == '.' )
+            i++;
+        data.Path.sprite = ft_strdup(str + i);
     }
 }
 
@@ -43,25 +56,36 @@ void    ft_floor(char *str)
     int i;
 
     i = 0;
+    while (str[i] == ' ')
+            i++;
     data.floor.r = ft_atoi(str + i);
     while (ft_isdigit(str[i]) || str[i] == ' ')
         i++;
-    if (str[i] == ',')
+    while (str[i] == ',')
         i++;
     data.floor.g = ft_atoi(str + i);
     while (ft_isdigit(str[i]) || str[i] == ' ')
         i++;
-    if (str[i] == ',')
+    while (str[i] == ',')
         i++;
     data.floor.b = ft_atoi(str + i);
-    data.floor.color = rgb_to_int(data.floor.r, data.floor.g, data.floor.b);
+    if ((data.floor.r < 0 || data.floor.r > 256) && (data.floor.g < 0 || data.floor.g > 256) &&
+        (data.floor.b < 0 || data.floor.b > 256))
+    {
+        ft_printf("\033[31mInvalid floor RGB Color !\033[0m\n");
+        exit(1);
+    }
+    else
+        data.floor.color = rgb_to_int(data.floor.r, data.floor.g, data.floor.b);
 }
 
 void    ft_ceilling(char *str)
 {
-    int i;
+     int i;
 
     i = 0;
+    while (str[i] == ' ')
+            i++;
     data.ceilling.r = ft_atoi(str + i);
     while (ft_isdigit(str[i]) || str[i] == ' ')
         i++;
@@ -73,7 +97,14 @@ void    ft_ceilling(char *str)
     if (str[i] == ',')
         i++;
     data.ceilling.b = ft_atoi(str + i);
-    data.ceilling.color = rgb_to_int(data.ceilling.r, data.ceilling.g, data.ceilling.b);
+    if ((data.ceilling.r < 0 || data.ceilling.r > 256) && (data.ceilling.g < 0 || data.ceilling.g > 256) &&
+        (data.ceilling.b < 0 || data.ceilling.b > 256))
+    {
+        ft_printf("\033[31mInvalid Ceilling RGB Color !\033[0m\n");
+        exit(1);
+    }
+    else
+        data.ceilling.color = rgb_to_int(data.ceilling.r, data.ceilling.g, data.ceilling.b);
 }
 
 char    *ft_check_map(char *str)

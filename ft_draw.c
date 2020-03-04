@@ -7,7 +7,6 @@ void    ft_pixel_put(double x, double y, unsigned int color)
 
 }
 
-
 void    ft_draw_line(double X0, double Y0, double X1 , double Y1, unsigned int color)
 {
     int dx = X1 - X0; 
@@ -63,7 +62,6 @@ void    ft_draw_sprites(void)
     i = 0;
     while (i < data.nb_of_sprites)
     {
-        //printf("%d : %f\n", i,s_data[i].distance);
         ft_sprite(i);
         i++;
     }

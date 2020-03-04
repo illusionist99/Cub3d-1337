@@ -10,6 +10,7 @@ int     ft_map_cols(char **map)
     return (i);
 }
 
+
 void    init_player()
 {
     player.turnDirection = 0;
@@ -71,7 +72,7 @@ void    ft_position_update()
     }
     
 }
-int    ft_update()
+int    ft_update(char *argv)
 {
     if (image.ptr)
         mlx_destroy_image(mlx.mlx, image.ptr);
@@ -81,6 +82,8 @@ int    ft_update()
     ft_draw_player();
     ft_draw_sprites();
     ft_drawmap();
+    if (ft_strncmp(argv, "--save", ft_strlen("--save")) == 0)
+        ft_handle_bmp();
     mlx_put_image_to_window(mlx.mlx, mlx.window, image.ptr, 0, 0);
     return (1);
 }
@@ -123,12 +126,13 @@ int     main(int argc, char **argv)
     }
     if (!(mlx.mlx = mlx_init()))
         return (-1);
+    printf("%d | %d \n", data.Height, data.Width);
     mlx.window = mlx_new_window(mlx.mlx, data.Width, data.Height , "1337 Cub3d");
     init_player();
     init_textures();
     init_sprites();
     set_hooks();
-    mlx_loop_hook(mlx.mlx, ft_update, "hi");
+    mlx_loop_hook(mlx.mlx, ft_update, argv[2]);
     mlx_loop(mlx.mlx);
     return (0);
 }

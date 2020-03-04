@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "array": "c",
-        "string_view": "c",
-        "string": "c",
-        "vector": "c",
-        "libcub3d.h": "c"
-    }
-}
