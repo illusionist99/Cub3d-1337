@@ -25,12 +25,22 @@ void ft_handle_bmp()
 
     write(fd, bmpfileheader, 14);
     write(fd, bmpinfoheader, 40);
-    int i;
 
-    i = -data.Height + 1;
-    while (i >= 0)
+    int i;
+    int j;
+    int num;
+
+    i = 0;
+    j = 0;
+    while (i < data.Height)
     {
-        write(fd, &image.data[data.Width * (data.Height - i - 1)], 3);
+        num = (data.Height - i - 1) * data.Width;
+        j = 0;
+        while (j < data.Width)
+        {
+            write(fd, &image.data[num + j], 3);
+            j++;
+        }
         i++;
     }
     close(fd);

@@ -97,7 +97,7 @@ void    init_textures()
     south.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.south, &south.width, &south.height);
     east.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.east, &east.width, &east.height);
     sprite.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.sprite, &sprite.width, &sprite.height);
-
+    printf("north : %s | South : %s | EAST : %s | WEST : %s | SPRITE : %s\n", data.Path.north, data.Path.south,  data.Path.east, data.Path.west, data.Path.sprite);
     if (north.ptr && west.ptr && south.ptr && east.ptr && sprite.ptr)
     {
         north.data = (int *)mlx_get_data_addr(north.ptr, &north.bits_per_pixel, &north.size_line, &north.endian);
@@ -129,11 +129,14 @@ int     main(int argc, char **argv)
     if (!(mlx.mlx = mlx_init()))
         return (-1);
     printf("%d | %d \n", data.Height, data.Width);
-    mlx.window = mlx_new_window(mlx.mlx, data.Width, data.Height , "1337 Cub3d");
+    if (ft_strncmp(argv[2], "--save", ft_strlen("--save")))
+    {
+        mlx.window = mlx_new_window(mlx.mlx, data.Width, data.Height , "1337 Cub3d");
+        set_hooks();
+    }
     init_player();
     init_textures();
     init_sprites();
-    set_hooks();
     mlx_loop_hook(mlx.mlx, ft_update, argv[2]);
     mlx_loop(mlx.mlx);
     return (0);

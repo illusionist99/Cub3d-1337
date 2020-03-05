@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/05 07:28:51 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/05 12:09:22 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,13 @@ int     ft_analyse(char *str)
     else if (str[i] == 'C')
         ft_ceilling(str + i + 1);
     else if (ft_memcmp(str, "NO", 2) == 0)
-        data.Path.north = ft_substr(str, 5, ft_strlen(str + 4));
+        data.Path.north = ft_substr(str, 5, ft_strlen(str + 3));
     else if (ft_memcmp(str, "SO", 2) == 0)
-        data.Path.south = ft_substr(str, 5, ft_strlen(str + 4));
+        data.Path.south = ft_substr(str, 5, ft_strlen(str + 3));
     else if (ft_memcmp(str, "WE", 2) == 0)
-        data.Path.west = ft_substr(str, 5, ft_strlen(str + 4));
+        data.Path.west = ft_substr(str, 5, ft_strlen(str + 3));
     else if (ft_memcmp(str, "EA", 2) == 0)
-        data.Path.east = ft_substr(str, 5, ft_strlen(str + 4));
+        data.Path.east = ft_substr(str, 5, ft_strlen(str + 3));
     else if (str[i] == 'S')
         ft_sprite_path(str + i);
     else if (ft_isdigit(str[i]) || str[i] == ' ')
