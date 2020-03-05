@@ -14,5 +14,5 @@ unsigned int rgb_to_int(unsigned int r, unsigned int g, unsigned int b)
 
     c = (c << 8) | g;
     c = (c << 8) | b;
-    return c;
+    return (c);
 }

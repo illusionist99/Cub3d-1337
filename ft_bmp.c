@@ -3,7 +3,7 @@
 void ft_handle_bmp()
 {
     int fd = open("file.bmp", O_CREAT | O_RDWR , 0644);
-    int filesize = 54 + 3*data.Width*data.Height;  //w is your image width, h is image height, both int
+    int filesize = 54 + 3*data.Width*data.Height;
 
     unsigned char bmpfileheader[14] = {'B','M', 0,0,0,0, 0,0, 0,0, 54,0,0,0};
     unsigned char bmpinfoheader[40] = {40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0, 24,0};
@@ -27,12 +27,12 @@ void ft_handle_bmp()
     write(fd, bmpinfoheader, 40);
     int i;
 
-    i = 0;
-    while (i < data.Height)
+    i = -data.Height + 1;
+    while (i >= 0)
     {
-        write(fd, &image.data[data.Width * (data.Height  - i - 1)], 3);
+        write(fd, &image.data[data.Width * (data.Height - i - 1)], 3);
         i++;
     }
     close(fd);
-    //exit(1);
+    exit(1);
 }

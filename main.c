@@ -45,7 +45,9 @@ int     ft_hasWall(double pos_x, double pos_y)
 
     x = (int )floor(pos_x / TILE_SIZE);
     y = (int )floor(pos_y / TILE_SIZE);
-    if (x < 0 || x > data.nb_of_rows || y < 0 || y > data.nb_of_cols)
+    if (y < 0 || y >= data.nb_of_cols)
+        return (1);
+    if (x < 0 || x >= ft_strlen(data.map[y]))
         return (1);
     else if (data.map[y][x] == '1')
         return (0);

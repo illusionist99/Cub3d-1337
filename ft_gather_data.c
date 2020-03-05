@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/04 21:51:38 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/05 07:28:51 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void    ft_resolution(char *str)
     }
     if (data.Height < 0 || data.Width < 0)
         exit(1);
-    if (data.Height >= 1440)
+    if (data.Height > 1440)
         data.Height = 1400;
-    if (data.Width >= 2560)
+    if (data.Width > 2560)
         data.Width = 2500;
 }
 
@@ -119,19 +119,17 @@ char    *ft_check_map(char *str)
     o = 0;
     s = NULL;
     while (str[i] != '\0')
-    {
-        if (str[i] == ' ')
-            str[i] = '1';
-        cpt++;
         i++;
-    }
+    s = (char *)malloc(sizeof(char ) * i + 1);
     i = 0;
-    s = (char *)malloc(sizeof(char ) * cpt + 1);
     while (str[i] != '\0')
     {
-            s[o] = str[i];
-            o++;
-            i++;
+        if (str[i] == '1')
+            s[o] = '1';
+        else
+                s[o] = str[i];
+        o++;
+        i++;
     }
     s[o] = '\0';
     printf("%s\n", s);

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/04 22:10:13 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/05 10:58:24 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 	double nextHorzTouchX = xintercept;
 	double nextHorzTouchY = yintercept;
 
-	int Width = data.nb_of_rows * TILE_SIZE;
-	int Height = data.nb_of_cols * TILE_SIZE;
-	while (nextHorzTouchX >= 0 && nextHorzTouchX < data.Width && nextHorzTouchY >= 0 && nextHorzTouchY < data.Height)
+	while (nextHorzTouchX >= 0 && nextHorzTouchX < 35 * TILE_SIZE && nextHorzTouchY >= 0 && nextHorzTouchY < 14 * TILE_SIZE)
 	{
 		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY))
 		{
@@ -133,8 +131,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 	double nextVertTouchX = xintercept;
 	double nextVertTouchY = yintercept;
 
-
-	while ((nextVertTouchX >= 0 && nextVertTouchX < data.Width) && (nextVertTouchY >= 0  && nextVertTouchY < data.Height)) {
+	while ((nextVertTouchX >= 0 && nextVertTouchX <  35 * TILE_SIZE) && (nextVertTouchY >= 0  && nextVertTouchY < 14 * TILE_SIZE)) {
 		if (!ft_hasWall(nextVertTouchX, nextVertTouchY))
 		{
 			foundVertWallHit = TRUE;
@@ -179,7 +176,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 			double texture_y = 0;
 			double step = (double )(west.height/(end - start));
 
-			while (start <= end)
+			while (start < end)
 			{
 				if ((int)(texture_y) * west.height + (int)offset < 64*64)
 					ft_pixel_put(col, start, west.data[(int)(texture_y) * west.height + (int)offset]);
@@ -192,7 +189,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 			double texture_y = 0;
 			double step = (double )(east.height/(end - start));
 
-			while (start <= end)
+			while (start < end)
 			{
 				if ((int)(texture_y) * east.height + (int)offset < 64*64)
 					ft_pixel_put(col, start, east.data[(int)(texture_y) * east.height + (int)offset]);
@@ -206,7 +203,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 			double texture_y = 0;
 			double step = (double )(south.height/(end - start));
 
-			while (start <= end)
+			while (start < end)
 			{
 				if ((int)(texture_y) * south.height + (int)offset < 64*64)
 					ft_pixel_put(col, start, south.data[(int)(texture_y) * south.height + (int)offset]);
@@ -220,7 +217,7 @@ void    ft_Wall_Hit(int col, double rayAngle)
 			double texture_y = 0;
 			double step = (double )(north.height/(end - start));
 
-			while (start <= end)
+			while (start < end)
 			{
 				if ((int)(texture_y) * north.height + (int)offset < 64*64)
 					ft_pixel_put(col, start, north.data[(int)(texture_y) * north.height + (int)offset]);
