@@ -18,7 +18,7 @@ void    render_spt(int x, int y, int sp_size, int k)
         j = 0;
         while (j++ < sp_size)
         {
-            if ((int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size)) < 64 * 64)
+            if ((int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size)) < sprite.width * sprite.height)
                 color = sprite.data[(int )(sprite.height * (j * sprite.width / sp_size) + (i * sprite.height / sp_size))];
             if (color != 0)
                 ft_pixel_put(x + i, y + j, color);

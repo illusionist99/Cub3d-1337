@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/05 12:09:22 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/06 13:52:15 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ void    ft_resolution(char *str)
             i++;
         data.Height = atoi(&str[i]);
     }
-    if (data.Height < 0 || data.Width < 0)
+    if (data.Height <= 0 || data.Width <= 0)
+    {
         exit(1);
+        ft_printf("\033[31mInvalid Resolution!\033[0m\n");
+    }
     if (data.Height > 1440)
-        data.Height = 1400;
+        data.Height = 1440;
     if (data.Width > 2560)
-        data.Width = 2500;
+        data.Width = 2560;
 }
 
 void    ft_sprite_path(char *str)
@@ -178,7 +181,10 @@ int    ft_read_map(char **str)
     char    *line;
 
     line = NULL;
-    fd = open(str[0], O_RDONLY);
+    if (ft_strnstr(*str, ".cub", ft_strlen(*str)) != NULL)
+        fd = open(str[0], O_RDONLY);
+    else
+        return (0);
     while ((get_next_line(fd, &line) == 1))
         ft_analyse(line);
     data.cols = ft_strlen(data.map[0]);

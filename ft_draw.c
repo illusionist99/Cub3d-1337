@@ -1,24 +1,50 @@
 #include "libcub3d.h"
 
-void    ft_pixel_put(double x, double y, unsigned int color)
+void	ft_drawmap()
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (data.map[i] != '\0')
+    {
+        j = 0;
+        while (data.map[i][j] != '\0')
+        {
+            if (data.map[i][j] == '1')
+                ft_draw_cube(j * TILE_SIZE , i * TILE_SIZE);
+			j++;
+		}
+		i++;
+	}
+}
+
+void    ft_pixel_put(float x, float y, unsigned int color)
 {
     if ((x >= 0 && x < data.Width) && (y >= 0 && y < data.Height))
-        image.data[((int)x +  ((int)y) * data.Height)] = color;
+        image.data[((int)x +  ((int)y) * data.Width)] = color;
 
 }
 
-void    ft_draw_line(double X0, double Y0, double X1 , double Y1, unsigned int color)
+int abs (int n) 
+{ 
+    return ( (n>0) ? n : ( n * (-1))); 
+} 
+
+
+void    ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color)
 {
     int dx = X1 - X0; 
     int dy = Y1 - Y0; 
     int i;
     int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
   
-    double Xinc = dx / (double) steps; 
-    double Yinc = dy / (double) steps; 
+    float Xinc = dx / (float) steps; 
+    float Yinc = dy / (float) steps; 
   
-    double X = X0; 
-    double Y = Y0;
+    float X = X0; 
+    float Y = Y0;
     i = 0;
     while (i <= steps) 
     {
@@ -31,9 +57,9 @@ void    ft_draw_line(double X0, double Y0, double X1 , double Y1, unsigned int c
 
 void    ft_draw_player(void)
 {
-    double   angle_inc;
-    double   angle;
-    int     col;
+    float   angle_inc;
+    float   angle;
+    int      col;
 
 
     col = 0;

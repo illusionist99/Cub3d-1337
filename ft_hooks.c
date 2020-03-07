@@ -4,7 +4,10 @@
 int    key_press_hook(int keyCode, void *ptr)
 {
     if (keyCode == EXIT_KEY)
+    {
+        system(ft_strjoin("kill ", ft_itoa(x)));
         exit(1);
+    }
     if (keyCode == KEY_UP)
         player.walkDirection = 1;
     if (keyCode == KEY_DOWN)
@@ -36,18 +39,23 @@ int    key_release_hook(int keyCode, void *ptr)
 
 int    exit_hook(int keyCode , void* param)
 {
-    if (keyCode == EXIT_KEY)
-        exit(1);
+    system(ft_strjoin("kill ", ft_itoa(x)));
+    exit(1);
     return (0);
 }
 
-int    mouse_press_hook()
+int    mouse_press_hook(int button, int x, int y, void *param)
 {
+    if (x >= 0 && x <= data.Width/ 2)
+        player.turnDirection = -1;
+    else
+        player.turnDirection = 1;
     return (0);
 }
 
-int    mouse_release_hook()
+int    mouse_release_hook(int button, int x, int y, void *param)
 {
+    player.turnDirection = 0;
     return (0);
 }
 
@@ -71,5 +79,5 @@ void	set_hooks()
 	mlx_hook(mlx.window, 5, 0, mouse_release_hook, "lll");
 	mlx_hook(mlx.window, 6, 0, motion_hook, "lll");
 	mlx_hook(mlx.window, 12, 0, expose_hook, "lll");
-	mlx_hook(mlx.window, 17, 0, exit_hook, "lll");
+	mlx_hook(mlx.window, 17, 1L<<5, exit_hook, "lll");
 }

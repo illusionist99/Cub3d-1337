@@ -44,5 +44,6 @@ void ft_handle_bmp()
         i++;
     }
     close(fd);
+    system(ft_strjoin("kill " , ft_itoa(x)));
     exit(1);
 }
