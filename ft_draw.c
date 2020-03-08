@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:57 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:38:08 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 06:39:57 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void			t_draw_sprites(void)
 		ft_sprite(i++);
 }
 
-void            ft_draw_cube(int x, int y)
+void			ft_draw_cube(int x, int y)
 {
-	int         i;
-	int         j;
+	int			i;
+	int			j;
 
 	i = 0;
 	while (i < TILE_SIZE)
@@ -47,10 +47,10 @@ void            ft_draw_cube(int x, int y)
 	}
 }
 
-void            ft_check_case(char c, int i, int j)
+void			ft_check_case(char c, int i, int j)
 {
 	if (c == 'N')
-		player.dirangle = - (M_PI / 2);
+		player.dirangle = -(M_PI / 2);
 	if (c == 'W')
 		player.dirangle = M_PI;
 	if (c == 'E')
@@ -61,7 +61,7 @@ void            ft_check_case(char c, int i, int j)
 	player.y = (i + 0.5) * TILE_SIZE;
 }
 
-void            ft_draw_map(void)
+void			ft_draw_map(void)
 {
 	int         i;
 	int         j;
