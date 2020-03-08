@@ -1,8 +1,8 @@
-R  1000 1000
-NO ./textures/bluestone.xpm
-SO ./textures/bluestone.xpm
-WE ./textures/bluestone.xpm
-EA ./textures/bluestone.xpm
+R  1400 1440
+NO ./textures/wall_4.xpm
+SO ./textures/eagle.xpm
+WE ./textures/wall_4.xpm
+EA ./textures/purplestone.xpm
 S ./textures/sprite_1.xpm
 F 20,50,70
 C 20,20,220

@@ -13,169 +13,197 @@
 
 #include "libcub3d.h"
 
-void    ft_Wall_Hit(int col, float rayAngle)
+void	ft_draw_texture(t_image ptr, int col, float offset, float wallstripheight)
 {
-	float xintercept, yintercept;
-	float xstep, ystep;
+	float start = data.Height /2 - wallstripheight/2 + g_look;
+	float end = data.Height /2 + wallstripheight/2 + g_look;
+	float texture_y = 0;
+	float step = (float )(ptr.height/(end - start));
 
-	float foundHorzWallHit = FALSE;
-	float horzWallHitX = 0;
-	float horzWallHitY = 0;
-	
-	RayFacing(rayAngle);
-	yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
-	yintercept += ray.down ? TILE_SIZE : -0.00001;
-
-	xintercept = player.x + (yintercept - player.y) / tan(rayAngle);
-
-	ystep = TILE_SIZE;
-	ystep *= ray.up ? -1 : 1;
-
-	xstep = TILE_SIZE / tan(rayAngle);
-	xstep *= (ray.left && xstep > 0) ? -1 : 1;
-	xstep *= (ray.right && xstep < 0) ? -1 : 1;
-
-	float nextHorzTouchX = xintercept;
-	float nextHorzTouchY = yintercept;
-
-	if (ray.up)
-            nextHorzTouchY--;
-
-	while (nextHorzTouchX >= 0 && nextHorzTouchX < 35 * TILE_SIZE && nextHorzTouchY >= 0 && nextHorzTouchY < 14 * TILE_SIZE)
+	while (start <= end)
 	{
-		if (!ft_hasWall(nextHorzTouchX, nextHorzTouchY))
+		if ((int)(texture_y) * ptr.height + (int)offset < ptr.height*ptr.width)
+			ft_pixel_put(col, start, ptr.data[(int)(texture_y) * ptr.height + (int)offset]);
+		texture_y += step;
+		start++;
+	}
+}
+
+// void	ft_handle_text(int col, float rayangle)
+// {
+// 	float distanceProjPlane;
+//     float raydist;  
+//     float an;
+//     float wallStripHeight;
+
+//     an = rayangle - player.dirangle;
+//     raydist  = wallhit.distance * cos(an);
+//     distanceProjPlane = (data.Width/2) / tan(player.fov/2);
+//     wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
+	
+//     float offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
+
+// 		float start = data.Height /2 - wallStripHeight/2 + g_look;
+// 		float end = data.Height /2 + wallStripHeight/2 + g_look;
+	
+// 		if (ray.down && !wallhit.wasHitVertical)
+// 			ft_draw_texture(west, col, offset, wallStripHeight);
+// 		else if (ray.left && wallhit.wasHitVertical)
+// 			ft_draw_texture(east, col, offset, wallStripHeight);
+// 		else if (ray.right && wallhit.wasHitVertical)
+// 			ft_draw_texture(south, col, offset, wallStripHeight);
+// 		else if (ray.up && !wallhit.wasHitVertical)
+// 			ft_draw_texture(north, col, offset, wallStripHeight);
+// 		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2 + g_look, data.ceilling.color);
+// 		ft_draw_line(col , data.Height/2 + wallStripHeight/2 + g_look, col, data.Height, data.floor.color);
+//     	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE, WHITE);
+// }
+
+// void	ft_get_distance(int col, t_dir horzwallhit, t_dir vertwallhit)
+// {
+// 	float horzHitDistance = (mdr->foundHorzwallHit) ? ft_distancebetweenpoints(player.x, player.y, horzwallhit.x, horzwallhit.y)
+// 	 : INT_MAX;
+//     float vertHitDistance = (mdr->foundVertwallHit) ? ft_distancebetweenpoints(player.x, player.y, vertwallhit.x, vertwallhit.y)
+// 	 : INT_MAX;
+
+// 	wallhit.x = (horzHitDistance < vertHitDistance) ? horzwallhit.x : vertwallhit.x;
+// 	wallhit.y = (horzHitDistance < vertHitDistance) ? horzwallhit.y : vertwallhit.y;
+// 	wallhit.distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
+// 	wallhit.wasHitVertical = (vertHitDistance < horzHitDistance);
+// 	ray_distance[col] = wallhit.distance;
+// }
+
+
+
+t_run 	*ft_horz(t_run *mdr, float rayangle)
+{
+	mdr->foundHorzwallHit = FALSE;
+	mdr->horzWallHitX = 0;
+	mdr->horzWallHitY = 0;
+	
+	rayfacing(rayangle);
+	mdr->yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
+	mdr->yintercept += ray.down ? TILE_SIZE : -0.0001;
+
+	mdr->xintercept = player.x + (mdr->yintercept - player.y) / tan(rayangle);
+
+	mdr->ystep = TILE_SIZE;
+	mdr->ystep *= ray.up ? -1 : 1;
+
+	mdr->xstep = TILE_SIZE / tan(rayangle);
+	mdr->xstep *= (ray.left && mdr->xstep > 0) ? -1 : 1;
+	mdr->xstep *= (ray.right && mdr->xstep < 0) ? -1 : 1;
+
+	mdr->nextHorzTouchX = mdr->xintercept;
+	mdr->nextHorzTouchY = mdr->yintercept;
+
+	while (mdr->nextHorzTouchX >= 0 && mdr->nextHorzTouchX < 35 * TILE_SIZE && mdr->nextHorzTouchY >= 0 && mdr->nextHorzTouchY < 14 * TILE_SIZE)
+	{
+		if (!ft_hasWall(mdr->nextHorzTouchX, mdr->nextHorzTouchY))
 		{
-			foundHorzWallHit = TRUE;
-			horzWallHitX = nextHorzTouchX;
-			horzWallHitY = nextHorzTouchY;
+			mdr->foundHorzwallHit = TRUE;
+			mdr->horzWallHitX = mdr->nextHorzTouchX;
+			mdr->horzWallHitY = mdr->nextHorzTouchY;
 			break;
 		}
 		else
 		{
-			nextHorzTouchX += xstep;
-			nextHorzTouchY += ystep;
+			mdr->nextHorzTouchX += mdr->xstep;
+			mdr->nextHorzTouchY += mdr->ystep;
 		}
 	}
+	return (mdr);
+}
 
-	float foundVertWallHit = FALSE;
-	float vertWallHitX = 0;
-	float vertWallHitY = 0;
+t_run	*ft_vert(t_run *mdr, float rayangle)
+{
+	mdr->foundVertwallHit = FALSE;
+	mdr->vertWallHitX = 0;
+	mdr->vertWallHitY = 0;
 
-	RayFacing(rayAngle);
-	xintercept = floor(player.x / TILE_SIZE) * TILE_SIZE;
-	xintercept += ray.right ? TILE_SIZE : -0.00001;
+	rayfacing(rayangle);
+	mdr->xintercept = floor(player.x / TILE_SIZE) * TILE_SIZE;
+	mdr->xintercept += ray.right ? TILE_SIZE : -0.0001;
 
-	yintercept = player.y + (xintercept - player.x) * tan(rayAngle);
+	mdr->yintercept = player.y + (mdr->xintercept - player.x) * tan(rayangle);
 
-	xstep = TILE_SIZE;
-	xstep *= ray.left ? -1 : 1;
+	mdr->xstep = TILE_SIZE;
+	mdr->xstep *= ray.left ? -1 : 1;
 
-	ystep = TILE_SIZE * tan(rayAngle);
-	ystep *= (ray.up && ystep > 0) ? -1 : 1;
-	ystep *= (ray.down && ystep < 0) ? -1 : 1;
+	mdr->ystep = TILE_SIZE * tan(rayangle);
+	mdr->ystep *= (ray.up && mdr->ystep > 0) ? -1 : 1;
+	mdr->ystep *= (ray.down && mdr->ystep < 0) ? -1 : 1;
 
-	float nextVertTouchX = xintercept;
-	float nextVertTouchY = yintercept;
+	mdr->nextVertTouchX = mdr->xintercept;
+	mdr->nextVertTouchY = mdr->yintercept;
 
-	if (ray.left)
-            nextVertTouchX--;
-	while ((nextVertTouchX >= 0 && nextVertTouchX <  35 * TILE_SIZE) && (nextVertTouchY >= 0  && nextVertTouchY < 14 * TILE_SIZE)) {
-		if (!ft_hasWall(nextVertTouchX, nextVertTouchY))
+	while ((mdr->nextVertTouchX >= 0 && mdr->nextVertTouchX <  35 * TILE_SIZE) && (mdr->nextVertTouchY >= 0  && mdr->nextVertTouchY < 14 * TILE_SIZE))
+	{
+		if (!ft_hasWall(mdr->nextVertTouchX, mdr->nextVertTouchY))
 		{
-			foundVertWallHit = TRUE;
-			vertWallHitX = nextVertTouchX;
-			vertWallHitY = nextVertTouchY;
+			mdr->foundVertwallHit = TRUE;
+			mdr->vertWallHitX = mdr->nextVertTouchX;
+			mdr->vertWallHitY = mdr->nextVertTouchY;
 			break;
 		}
 		else
 		{
-			nextVertTouchX += xstep;
-			nextVertTouchY += ystep;
+			mdr->nextVertTouchX += mdr->xstep;
+			mdr->nextVertTouchY += mdr->ystep;
 		}
 	}
+	return (mdr);
+}
 
-
-	float horzHitDistance = (foundHorzWallHit) ? ft_distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
-	 : INT_MAX;
-    float vertHitDistance = (foundVertWallHit) ? ft_distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
-	 : INT_MAX;
-
-	wallhit.x = (horzHitDistance < vertHitDistance) ? horzWallHitX : vertWallHitX;
-	wallhit.y = (horzHitDistance < vertHitDistance) ? horzWallHitY : vertWallHitY;
-	wallhit.distance = (horzHitDistance < vertHitDistance) ? horzHitDistance : vertHitDistance;
-	wallhit.wasHitVertical = (vertHitDistance < horzHitDistance);
-	ray_distance[col] = wallhit.distance;
+void		ft_empty_trash(float rayangle, int col)
+{
 	float distanceProjPlane;
-    float raydist;  
-    float an;
-    float wallStripHeight;
+	float raydist;  
+	float an;
+	float wallStripHeight;
+	float offset;
 
-    an = rayAngle - player.dirangle;
-    raydist  = wallhit.distance * cos(an);
-    distanceProjPlane = (data.Width/2) / tan(player.fov/2);
-    wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
-	
-    float offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
+	an = rayangle - player.dirangle;
+	raydist  = wallhit.distance * cos(an);
+	distanceProjPlane = (data.Width/2) / tan(player.fov/2);
+	wallStripHeight = (TILE_SIZE/raydist) * distanceProjPlane;
+	offset = ((wallhit.wasHitVertical == 0) ? fmod(wallhit.x , TILE_SIZE) : fmod(wallhit.y, TILE_SIZE));
+	if (ray.down && !wallhit.wasHitVertical)
+		ft_draw_texture(west, col, offset, wallStripHeight);
+	else if (ray.left && wallhit.wasHitVertical)
+		ft_draw_texture(east, col, offset, wallStripHeight);
+	else if (ray.right && wallhit.wasHitVertical)
+		ft_draw_texture(south, col, offset, wallStripHeight);
+	else if (ray.up && !wallhit.wasHitVertical)
+		ft_draw_texture(north, col, offset, wallStripHeight);
+	ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2 + g_look, data.ceilling.color);
+	ft_draw_line(col , data.Height/2 + wallStripHeight/2 + g_look, col, data.Height, data.floor.color);
+	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE, WHITE);
+}
 
-		float start = data.Height /2 - wallStripHeight/2 + g_look;
-		float end = data.Height /2 + wallStripHeight/2 + g_look;
-	
-		if (ray.down && !wallhit.wasHitVertical)
-		{
-			float texture_y = 0;
-			float step = (float )(west.height/(end - start));
 
-			while (start < end)
-			{
-				if ((int)(texture_y) * west.height + (int)offset < 64*64)
-					ft_pixel_put(col, start, west.data[(int)(texture_y) * west.height + (int)offset]);
-				texture_y += step;
-				start++;
-			}	
-		}
-		else if (ray.left && wallhit.wasHitVertical)
-		{
-			float texture_y = 0;
-			float step = (float )(east.height/(end - start));
+void    	ft_wall_hit(int col, float rayangle)
+{
+	t_run mdr;
 
-			while (start < end)
-			{
-				if ((int)(texture_y) * east.height + (int)offset < 64*64)
-					ft_pixel_put(col, start, east.data[(int)(texture_y) * east.height + (int)offset]);
-				texture_y += step;
-				start++;
-			}	
-			
-		}
-		else if (ray.right && wallhit.wasHitVertical)
-		{
-			float texture_y = 0;
-			float step = (float )(south.height/(end - start));
+	mdr.foundHorzwallHit = FALSE;
+	mdr.foundVertwallHit = FALSE;
+	ft_horz(&mdr, rayangle);
+	ft_vert(&mdr, rayangle);
+	mdr.horzHitDistance = (mdr.foundHorzwallHit)
+	? ft_distancebetweenpoints(player.x, player.y,
+	mdr.horzWallHitX, mdr.horzWallHitY) : INT_MAX;
+	mdr.vertHitDistance = (mdr.foundVertwallHit) ?
+	ft_distancebetweenpoints(player.x, player.y,
+	mdr.vertWallHitX, mdr.vertWallHitY) : INT_MAX;
 
-			while (start < end)
-			{
-				if ((int)(texture_y) * south.height + (int)offset < 64*64)
-					ft_pixel_put(col, start, south.data[(int)(texture_y) * south.height + (int)offset]);
-				texture_y += step;
-				start++;
-			}	
-
-		}
-		else if (ray.up && !wallhit.wasHitVertical)
-		{
-			float texture_y = 0;
-			float step = (float )(north.height/(end - start));
-
-			while (start < end)
-			{
-				if ((int)(texture_y) * north.height + (int)offset < 64*64)
-					ft_pixel_put(col, start, north.data[(int)(texture_y) * north.height + (int)offset]);
-				texture_y += step;
-				start++;
-			}	
-			
-		}
-		ft_draw_line(col , 0, col, data.Height/2 - wallStripHeight/2 + g_look, data.ceilling.color);
-		ft_draw_line(col , data.Height/2 + wallStripHeight/2 + g_look, col, data.Height, data.floor.color);
-    	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE, wallhit.x * MINIMAP_SCALE , wallhit.y * MINIMAP_SCALE, WHITE);
+	wallhit.x = (mdr.horzHitDistance < mdr.vertHitDistance)
+	? mdr.horzWallHitX : mdr.vertWallHitX;
+	wallhit.y = (mdr.horzHitDistance < mdr.vertHitDistance)
+	? mdr.horzWallHitY : mdr.vertWallHitY;
+	wallhit.distance = (mdr.horzHitDistance < mdr.vertHitDistance)
+	? mdr.horzHitDistance : mdr.vertHitDistance;
+	wallhit.wasHitVertical = (mdr.vertHitDistance < mdr.horzHitDistance);
+	ray_distance[col] = wallhit.distance;
+	ft_empty_trash(rayangle, col);
 }

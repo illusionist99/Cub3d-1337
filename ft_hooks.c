@@ -1,5 +1,16 @@
-#include "libcub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_hooks.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/07 16:57:51 by malaoui           #+#    #+#             */
+/*   Updated: 2020/03/07 23:08:30 by malaoui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "libcub3d.h"
 
 int    key_press_hook(int keyCode, void *ptr)
 {
@@ -17,9 +28,9 @@ int    key_press_hook(int keyCode, void *ptr)
     if (keyCode == KEY_LEFT)
         player.turnDirection = -1;
     if (keyCode == 13)
-        g_look += 10;
+        g_look += 50;
     if (keyCode == 1)
-        g_look -= 10;
+        g_look -= 50;
     return (1);
 }
 
@@ -59,18 +70,18 @@ int    mouse_release_hook(int button, int x, int y, void *param)
     return (0);
 }
 
-int    motion_hook()
+int    motion_hook(void)
 {
     
     return (0);
 }
 
-int    expose_hook()
+int    expose_hook(void)
 {
     return (0);
 }
 
-void	set_hooks()
+void	set_hooks(void)
 {
 	mlx_do_key_autorepeatoff(mlx.mlx);
 	mlx_hook(mlx.window, 2, 0, key_press_hook, "lll");

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/06 13:52:15 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/07 21:56:59 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ void    ft_resolution(char *str)
     }
     if (data.Height <= 0 || data.Width <= 0)
     {
-        exit(1);
         ft_printf("\033[31mInvalid Resolution!\033[0m\n");
+        exit(1);
     }
-    if (data.Height > 1440)
-        data.Height = 1440;
-    if (data.Width > 2560)
-        data.Width = 2560;
+    data.Height = (data.Height > 1440) ? 1440 : data.Height;
+    data.Width = (data.Width > 2560) ? 2560 : data.Width;
 }
 
 void    ft_sprite_path(char *str)
@@ -135,7 +133,6 @@ char    *ft_check_map(char *str)
         i++;
     }
     s[o] = '\0';
-    printf("%s\n", s);
     return (s);
 }
 
@@ -174,6 +171,7 @@ int     ft_analyse(char *str)
         return (0);
     return (1);
 }
+
 
 int    ft_read_map(char **str)
 {

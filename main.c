@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/07 16:57:35 by malaoui           #+#    #+#             */
+/*   Updated: 2020/03/07 23:06:30 by malaoui          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libcub3d.h"
 
-int     ft_find_biggest_line()
+int     ft_find_biggest_line(void)
 {
     int i;
     int max;
@@ -20,11 +32,10 @@ void    init_player()
 {
     player.turnDirection = 0;
     player.walkDirection = 0;
-    player.moveSpeed = 4;
-    player.rotationSpeed = 2 * (M_PI / 180);
-    player.fov = 60 * (M_PI / 180);
+    player.moveSpeed = 5;
+    player.rotationSpeed = 4 * (M_PI / 180);
+    player.fov = 66 * (M_PI / 180);
     data.nb_of_cols = ft_find_biggest_line();
-    // change name
     data.nb_of_rows = ft_map_cols(data.map);
     data.nb_of_sprites = 0;
 }

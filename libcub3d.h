@@ -119,6 +119,52 @@ typedef struct s_sprites
     float       distance;
 }               t_sprites;
 
+typedef	struct s_dir
+{
+	float x;
+	float y;
+}				t_dir;
+
+typedef	struct	s_elem
+{
+	t_dir	intercept;
+	t_dir	step;
+	t_dir	nexttouch;
+	t_dir	wallhit;
+}				t_elem;
+
+
+typedef struct s_run
+{
+	float xintercept;
+	float yintercept;
+
+	float xstep;
+	float ystep;
+
+	float foundHorzWallHit;
+
+	float horzWallHitX;
+	float horzWallHitY;
+
+	float foundVertwallHit;
+    float foundHorzwallHit;
+
+	float vertWallHitX;
+	float vertWallHitY;
+
+    float nextHorzTouchX;
+    float nextHorzTouchY;
+
+    float nextVertTouchX;
+	float nextVertTouchY;
+
+    float horzHitDistance;
+    float vertHitDistance;
+}				t_run;
+
+
+
 float           ray_distance[2560];
 
 t_ray           ray;
@@ -135,36 +181,43 @@ t_image         east;
 t_image         sprite;
 t_sprites       s_data[50];
 pid_t           x; 
-
+t_image         gun;
 int             g_look;
 
-void	        set_hooks();
+int             ft_find_biggest_line(void);
+void	        set_hooks(void);
 int             ft_update(char *argv);
 void            ft_pixel_put(float x, float y, unsigned int color);
 int             ft_read_map(char **str);
 unsigned int    rgb_to_int(unsigned int r, unsigned int g, unsigned int b);
 void            ft_draw_map(void);
 void            ft_draw_player(void);
-void            ft_Wall_Hit(int col, float rayAngle);
-int             ft_hasWall(float x, float y);
-float           ft_normalizeAngle(float *angle);
+void             ft_wall_hit(int col, float rayAngle);
+int             ft_hasWall(float pos_x, float pos_y);
+float           ft_normalizeangle(float *angle);
 void            ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color);
-void            ft_image_settings();
+void            ft_image_settings(void);
 void            ft_draw_cube(int  x, int y);
-void	        ft_drawmap();
-float           ft_distanceBetweenPoints(float x1, float y1, float x2, float y2);
-void            init_sprites();
-void            init_ray();
-void            init_player();
-void            init_textures();
-void            ft_position_update();
+void	        ft_drawmap(void);
+float           ft_distancebetweenpoints(float x1, float y1, float x2, float y2);
+void            init_sprites(void);
+void            init_ray(void);
+void            init_player(void);
+void            init_textures(void);
+void            ft_position_update(void);
 void            init_game(char **argv);
-void            RayFacing(float angle);
+void            rayfacing(float angle);
 void            ft_sprite(int i);
 void            ft_draw_sprites(void);
-void            ft_sort_sprites();
-void            ft_handle_bmp();
+void            ft_sort_sprites(void);
+void            ft_handle_bmp(void);
 int             main_process(char **argv);
 int             ft_map_cols(char **map);
-int             ft_hasWall_tex(float pos_x, float pos_y);
+int             ft_hasWall_tex(t_dir *pos);
+void	        ft_reset_struct(void);
+int		        horz_intersection(int col, float rayangle);
+int		        vert_intersection(int col, float rayangle);
+void		    ft_get_distance(int col,  t_dir horzwallhit, t_dir vertwallhit);
+void	        ft_draw_texture(t_image ptr, int col,float offset, float wallstripheight);
+int	            ft_texture_draw(int col, float rayangle);
 #endif
