@@ -11,7 +11,8 @@ SRC =	ft_gather_data.c\
 		ft_sprites.c\
 		ft_bmp.c\
 		ft_draw_utils.c\
-		ft_intersection_utils.c
+		ft_intersection_utils.c\
+		ft_utils.c
 
 
 LIB = ft_printf/libftprintf.a

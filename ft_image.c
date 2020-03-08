@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:48 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 07:08:34 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 10:16:21 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,49 @@
 
 void		ft_image_settings(void)
 {
-	image.ptr = mlx_new_image(mlx.mlx, data.Width, data.Height);
-	image.data = (int *)mlx_get_data_addr(image.ptr,
-	&(image.bits_per_pixel), &(image.size_line), &(image.endian));
+	g_image.ptr = mlx_new_image(g_mlx.mlx, g_data.width, g_data.height);
+	g_image.data = (int *)mlx_get_data_addr(g_image.ptr,
+	&(g_image.bits_per_pixel), &(g_image.size_line), &(g_image.endian));
 }
 
 void		get_text_data(void)
 {
-	north.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.north,
-			&north.width, &north.height);
-	west.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.west,
-			&west.width, &west.height);
-	south.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.south,
-			&south.width, &south.height);
-	east.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.east,
-			&east.width, &east.height);
-	sprite.ptr = mlx_xpm_file_to_image(mlx.mlx, data.Path.sprite,
-			&sprite.width, &sprite.height);
+	g_north.ptr = mlx_xpm_file_to_image(g_mlx.mlx, g_data.path.north,
+			&g_north.width, &g_north.height);
+	g_west.ptr = mlx_xpm_file_to_image(g_mlx.mlx, g_data.path.west,
+			&g_west.width, &g_west.height);
+	g_south.ptr = mlx_xpm_file_to_image(g_mlx.mlx, g_data.path.south,
+			&g_south.width, &g_south.height);
+	g_east.ptr = mlx_xpm_file_to_image(g_mlx.mlx, g_data.path.east,
+			&g_east.width, &g_east.height);
+	g_sprite.ptr = mlx_xpm_file_to_image(g_mlx.mlx, g_data.path.sprite,
+			&g_sprite.width, &g_sprite.height);
 }
 
 void		init_textures(void)
 {
 	get_text_data();
-	if (north.ptr && west.ptr && south.ptr && east.ptr && sprite.ptr)
+	if (g_north.ptr && g_west.ptr && g_south.ptr && g_east.ptr && g_sprite.ptr)
 	{
-		north.data = (int *)mlx_get_data_addr(north.ptr, &north.bits_per_pixel,
-				&north.size_line, &north.endian);
-		west.data = (int *)mlx_get_data_addr(west.ptr, &west.bits_per_pixel,
-				&west.size_line, &west.endian);
-		south.data = (int *)mlx_get_data_addr(south.ptr, &south.bits_per_pixel,
-				&south.size_line, &south.endian);
-		east.data = (int *)mlx_get_data_addr(east.ptr, &east.bits_per_pixel,
-				&east.size_line, &east.endian);
-		sprite.data = (int *)mlx_get_data_addr(sprite.ptr,
-		&sprite.bits_per_pixel,
-				&sprite.size_line, &sprite.endian);
+		g_north.data = (int *)mlx_get_data_addr(g_north.ptr,
+		&g_north.bits_per_pixel,
+				&g_north.size_line, &g_north.endian);
+		g_west.data = (int *)mlx_get_data_addr(g_west.ptr,
+		&g_west.bits_per_pixel,
+				&g_west.size_line, &g_west.endian);
+		g_south.data = (int *)mlx_get_data_addr(g_south.ptr,
+		&g_south.bits_per_pixel,
+				&g_south.size_line, &g_south.endian);
+		g_east.data = (int *)mlx_get_data_addr(g_east.ptr,
+		&g_east.bits_per_pixel,
+				&g_east.size_line, &g_east.endian);
+		g_sprite.data = (int *)mlx_get_data_addr(g_sprite.ptr,
+		&g_sprite.bits_per_pixel,
+				&g_sprite.size_line, &g_sprite.endian);
 	}
 	else
 	{
-		ft_printf("\033[31mInvalid Texture Path \
+		ft_printf("\033[31mInvalid Texture path \
 !\n\033[32mUsage : ./file.xpm\033[0m\n");
 		exit(1);
 	}

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:57 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:57:54 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 09:16:48 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void			ft_draw_sprites(void)
 	int			i;
 
 	i = 0;
-	while (i < data.nb_of_sprites)
+	while (i < g_data.nb_of_sprites)
 	{
-		s_data[i].distance = ft_distancebetweenpoints(player.x, player.y,
-		s_data[i].x, s_data[i].y);
+		g_s_data[i].distance = ft_distancebetweenpoints(g_player.x, g_player.y,
+		g_s_data[i].x, g_s_data[i].y);
 		i++;
 	}
 	ft_sort_sprites();
 	i = 0;
-	while (i < data.nb_of_sprites)
+	while (i < g_data.nb_of_sprites)
 		ft_sprite(i++);
 }
 
@@ -50,15 +50,15 @@ void			ft_draw_cube(int x, int y)
 void			ft_check_case(char c, int i, int j)
 {
 	if (c == 'N')
-		player.dirangle = -(M_PI / 2);
+		g_player.dirangle = -(M_PI / 2);
 	if (c == 'W')
-		player.dirangle = M_PI;
+		g_player.dirangle = M_PI;
 	if (c == 'E')
-		player.dirangle = 0;
+		g_player.dirangle = 0;
 	if (c == 'S')
-		player.dirangle = M_PI / 2;
-	player.x = (j + 0.5) * TILE_SIZE;
-	player.y = (i + 0.5) * TILE_SIZE;
+		g_player.dirangle = M_PI / 2;
+	g_player.x = (j + 0.5) * TILE_SIZE;
+	g_player.y = (i + 0.5) * TILE_SIZE;
 }
 
 void			ft_draw_map(void)
@@ -69,16 +69,16 @@ void			ft_draw_map(void)
 
 	i = 0;
 	j = 0;
-	while (data.map[i] != '\0' && first_t == 0)
+	while (g_data.map[i] != '\0' && first_t == 0)
 	{
 		j = 0;
-		while (data.map[i][j] != '\0')
+		while (g_data.map[i][j] != '\0')
 		{
-			if (data.map[i][j] == '1')
+			if (g_data.map[i][j] == '1')
 				ft_draw_cube(j * TILE_SIZE, i * TILE_SIZE);
-			else if ((data.map[i][j] == 'N' || data.map[i][j] == 'W'
-			|| data.map[i][j] == 'E' || data.map[i][j] == 'S'))
-				ft_check_case(data.map[i][j], i, j);
+			else if ((g_data.map[i][j] == 'N' || g_data.map[i][j] == 'W'
+			|| g_data.map[i][j] == 'E' || g_data.map[i][j] == 'S'))
+				ft_check_case(g_data.map[i][j], i, j);
 			j++;
 		}
 		i++;

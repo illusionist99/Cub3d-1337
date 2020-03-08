@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 21:01:05 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 00:53:38 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 10:05:18 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,19 @@ unsigned int	rgb_to_int(unsigned int r, unsigned int g, unsigned int b)
 
 void			init_ray(void)
 {
-	ray.down = 0;
-	ray.up = 0;
-	ray.right = 0;
-	ray.left = 0;
+	g_ray.down = 0;
+	g_ray.up = 0;
+	g_ray.right = 0;
+	g_ray.left = 0;
 }
 
 void			rayfacing(float angle)
 {
 	init_ray();
-	ray.down = (angle > 0 && angle < M_PI);
-	ray.up = !ray.down;
-	ray.right = (angle < 0.5 * M_PI || angle > 1.5 * M_PI);
-	ray.left = !ray.right;
+	g_ray.down = (angle > 0 && angle < M_PI);
+	g_ray.up = !g_ray.down;
+	g_ray.right = (angle < 0.5 * M_PI || angle > 1.5 * M_PI);
+	g_ray.left = !g_ray.right;
 }
 
 float			ft_distancebetweenpoints(float x1, float y1, float x2, float y2)

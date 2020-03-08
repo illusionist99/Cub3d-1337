@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 21:43:02 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:33:41 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 10:15:57 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void		ft_drawmap(void)
 
 	i = 0;
 	j = 0;
-	while (data.map[i] != '\0')
+	while (g_data.map[i] != '\0')
 	{
 		j = 0;
-		while (data.map[i][j] != '\0')
+		while (g_data.map[i][j] != '\0')
 		{
-			if (data.map[i][j] == '1')
+			if (g_data.map[i][j] == '1')
 				ft_draw_cube(j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
@@ -34,8 +34,8 @@ void		ft_drawmap(void)
 
 void		ft_pixel_put(float x, float y, unsigned int color)
 {
-	if ((x >= 0 && x < data.Width) && (y >= 0 && y < data.Height))
-		image.data[((int)x + ((int)y) * data.Width)] = color;
+	if ((x >= 0 && x < g_data.width) && (y >= 0 && y < g_data.height))
+		g_image.data[((int)x + ((int)y) * g_data.width)] = color;
 }
 
 int			abs(int n)
@@ -43,26 +43,26 @@ int			abs(int n)
 	return ((n > 0) ? n : (n * -1));
 }
 
-void		 ft_draw_line(float X0, float Y0, float X1 , float Y1, unsigned int color)
+void		ft_draw_line(t_line line, unsigned int color)
 {
-	int dx = X1 - X0; 
-	int dy = Y1 - Y0; 
 	int i;
-	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy); 
 
-	float Xinc = dx / (float) steps; 
-	float Yinc = dy / (float) steps; 
-
-	float X = X0; 
-	float Y = Y0;
 	i = 0;
-	while (i <= steps) 
+	line.dx = line.x1 - line.x0;
+	line.dy = line.y1 - line.y0;
+	line.steps = abs(line.dx) > abs(line.dy)
+		? abs(line.dx) : abs(line.dy);
+	line.xinc = line.dx / (float)line.steps;
+	line.yinc = line.dy / (float)line.steps;
+	line.x = line.x0;
+	line.y = line.y0;
+	while (i <= line.steps)
 	{
-		ft_pixel_put(X, Y, color);
-		X += Xinc;
-		Y += Yinc;
+		ft_pixel_put(line.x, line.y, color);
+		line.x += line.xinc;
+		line.y += line.yinc;
 		i++;
-	} 
+	}
 }
 
 void		ft_draw_player(void)
@@ -72,9 +72,9 @@ void		ft_draw_player(void)
 	int		col;
 
 	col = 0;
-	angle = player.dirangle - (player.fov) / 2;
-	angle_inc = player.fov/data.Width;
-	while (col < data.Width)
+	angle = g_player.dirangle - (g_player.fov) / 2;
+	angle_inc = g_player.fov / g_data.width;
+	while (col < g_data.width)
 	{
 		ft_normalizeangle(&angle);
 		ft_wall_hit(col, angle);

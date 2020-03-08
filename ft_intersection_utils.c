@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 06:31:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 08:30:30 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 10:15:57 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ float offset, float wallstripheight)
 	float	texture_y;
 	float	step;
 
-	start = data.Height / 2 - wallstripheight / 2 + g_look;
-	end = data.Height / 2 + wallstripheight / 2 + g_look;
+	start = g_data.height / 2 - wallstripheight / 2 + g_look;
+	end = g_data.height / 2 + wallstripheight / 2 + g_look;
 	texture_y = 0;
 	step = (float)(ptr.height / (end - start));
 	while (start <= end)
@@ -37,41 +37,42 @@ float offset, float wallstripheight)
 
 void		ft_horz_inc(t_run *mdr)
 {
-	while ((mdr->nextHorzTouchX >= 0 &&
-	mdr->nextHorzTouchX < 35 * TILE_SIZE) &&
-	(mdr->nextHorzTouchY >= 0 && mdr->nextHorzTouchY < 14 * TILE_SIZE))
+	while ((mdr->nexthorztouchx >= 0 &&
+	mdr->nexthorztouchx < 35 * TILE_SIZE) &&
+	(mdr->nexthorztouchy >= 0 && mdr->nexthorztouchy < 14 * TILE_SIZE))
 	{
-		if (!ft_haswall(mdr->nextHorzTouchX, mdr->nextHorzTouchY))
+		if (!ft_haswall(mdr->nexthorztouchx, mdr->nexthorztouchy))
 		{
-			mdr->foundHorzwallHit = TRUE;
-			mdr->horzWallHitX = mdr->nextHorzTouchX;
-			mdr->horzWallHitY = mdr->nextHorzTouchY;
+			mdr->foundhorzwallhit = TRUE;
+			mdr->horzwallhitx = mdr->nexthorztouchx;
+			mdr->horzwallhity = mdr->nexthorztouchy;
 			break ;
 		}
 		else
 		{
-			mdr->nextHorzTouchX += mdr->xstep;
-			mdr->nextHorzTouchY += mdr->ystep;
+			mdr->nexthorztouchx += mdr->xstep;
+			mdr->nexthorztouchy += mdr->ystep;
 		}
 	}
 }
 
 t_run		*ft_horz(t_run *mdr, float rayangle)
 {
-	mdr->foundHorzwallHit = FALSE;
-	mdr->horzWallHitX = 0;
-	mdr->horzWallHitY = 0;
+	mdr->foundhorzwallhit = FALSE;
+	mdr->horzwallhitx = 0;
+	mdr->horzwallhity = 0;
 	rayfacing(rayangle);
-	mdr->yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
-	mdr->yintercept += ray.down ? TILE_SIZE : -0.0001;
-	mdr->xintercept = player.x + (mdr->yintercept - player.y) / tan(rayangle);
+	mdr->yintercept = floor(g_player.y / TILE_SIZE) * TILE_SIZE;
+	mdr->yintercept += g_ray.down ? TILE_SIZE : -0.0001;
+	mdr->xintercept = g_player.x +
+	(mdr->yintercept - g_player.y) / tan(rayangle);
 	mdr->ystep = TILE_SIZE;
-	mdr->ystep *= ray.up ? -1 : 1;
+	mdr->ystep *= g_ray.up ? -1 : 1;
 	mdr->xstep = TILE_SIZE / tan(rayangle);
-	mdr->xstep *= (ray.left && mdr->xstep > 0) ? -1 : 1;
-	mdr->xstep *= (ray.right && mdr->xstep < 0) ? -1 : 1;
-	mdr->nextHorzTouchX = mdr->xintercept;
-	mdr->nextHorzTouchY = mdr->yintercept;
+	mdr->xstep *= (g_ray.left && mdr->xstep > 0) ? -1 : 1;
+	mdr->xstep *= (g_ray.right && mdr->xstep < 0) ? -1 : 1;
+	mdr->nexthorztouchx = mdr->xintercept;
+	mdr->nexthorztouchy = mdr->yintercept;
 	ft_horz_inc(mdr);
 	return (mdr);
 }

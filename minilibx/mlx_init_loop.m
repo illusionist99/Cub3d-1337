@@ -69,9 +69,9 @@ void *mlx_init()
   [[NSRunningApplication currentApplication] activateWithOptions:NSApplicationActivateIgnoringOtherApps];
 
   // load font
-  new_mlx->font = mlx_new_image(new_mlx, (FONT_WIDTH+2)*95, FONT_HEIGHT);
+  new_mlx->font = mlx_new_image(new_mlx, (FONT_width+2)*95, FONT_height);
   i = 0;
-  while (i < 4*(FONT_WIDTH+2)*95*FONT_HEIGHT)
+  while (i < 4*(FONT_width+2)*95*FONT_height)
     {
       new_mlx->font->buffer[i+0] = font_atlas.pixel_data[i+2];
       new_mlx->font->buffer[i+1] = font_atlas.pixel_data[i+1];
@@ -82,15 +82,15 @@ void *mlx_init()
 
 
 #ifdef	STRINGPUTX11
-  new_mlx->font->vertexes[2] = FONT_WIDTH/1.4;
-  new_mlx->font->vertexes[4] = FONT_WIDTH/1.4;
-  new_mlx->font->vertexes[5] = (-FONT_HEIGHT-1)/1.4;
-  new_mlx->font->vertexes[7] = (-FONT_HEIGHT-1)/1.4;
+  new_mlx->font->vertexes[2] = FONT_width/1.4;
+  new_mlx->font->vertexes[4] = FONT_width/1.4;
+  new_mlx->font->vertexes[5] = (-FONT_height-1)/1.4;
+  new_mlx->font->vertexes[7] = (-FONT_height-1)/1.4;
 #else
-  new_mlx->font->vertexes[2] = FONT_WIDTH;
-  new_mlx->font->vertexes[4] = FONT_WIDTH;
-  new_mlx->font->vertexes[5] = -FONT_HEIGHT-1;
-  new_mlx->font->vertexes[7] = -FONT_HEIGHT-1;
+  new_mlx->font->vertexes[2] = FONT_width;
+  new_mlx->font->vertexes[4] = FONT_width;
+  new_mlx->font->vertexes[5] = -FONT_height-1;
+  new_mlx->font->vertexes[7] = -FONT_height-1;
 #endif
 
   return ((void *)new_mlx);
