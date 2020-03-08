@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 08:52:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:36:42 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 14:13:30 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <mlx.h>
 # include "ft_printf/libftprintf.h"
 # include "gnl/get_next_line.h"
+# include <signal.h>
+# include <sys/wait.h>
 
 # define EXIT_KEY		53
 # define KEY_LEFT		123
@@ -174,6 +176,7 @@ t_data					g_data;
 t_mlx					g_mlx;
 t_player				g_player;
 t_image					g_image;
+t_image					g_gun;
 t_pos					g_wallhit;
 t_pos					g_texhit;
 t_image					g_north;
@@ -183,6 +186,7 @@ t_image					g_east;
 t_image					g_sprite;
 t_sprites				g_s_data[50];
 pid_t					g_child;
+pid_t					g_childd;
 int						g_look;
 
 int						ft_find_biggest_line(void);
@@ -233,4 +237,5 @@ int						exit_hook(int keycode, void *param);
 char					*ft_check_map(char *str);
 void					ft_c(char *str);
 void					ft_floor(char *str);
+unsigned int			shadow(int color, int col);
 #endif

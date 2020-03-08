@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 06:31:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:15:57 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 14:13:04 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ float offset, float wallstripheight)
 	{
 		if ((int)(texture_y) * ptr.height +
 		(int)offset < ptr.height * ptr.width)
-			ft_pixel_put(col, start, ptr.data[(int)(texture_y) * ptr.height
-			+ (int)offset]);
+			ft_pixel_put(col, start, shadow(ptr.data[(int)(texture_y)
+			* ptr.height + (int)offset], col));
 		texture_y += step;
 		start++;
 	}

@@ -30,7 +30,7 @@ int	mlx_mouse_move(mlx_win_list_t *win, int x, int y)
   pos = [thewin frame];
   //  printf("got win pos %f %f\n", pos.origin.x, pos.origin.y);
   point.x = pos.origin.x + x;
-  point.y = NSheight([[thewin screen] frame]) - NSheight([(id)(win->winid) frame]) - pos.origin.y + 1 + y;
+  point.y = NSHeight([[thewin screen] frame]) - NSHeight([(id)(win->winid) frame]) - pos.origin.y + 1 + y;
   CGWarpMouseCursorPosition(point);
   CGAssociateMouseAndMouseCursorPosition(true);
   return (0);
@@ -47,6 +47,6 @@ int	mlx_mouse_get_pos(mlx_win_list_t *win, int *x, int *y)
   pos = [(id)(win->winid) frame];
   point = [thewin mouseLocationOutsideOfEventStream];
   *x = point.x;
-  *y = NSheight(pos) - 1 - point.y;
+  *y = NSHeight(pos) - 1 - point.y;
   return (0);
 }
