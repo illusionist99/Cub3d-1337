@@ -222,6 +222,6 @@ void	        ft_draw_texture(t_image ptr, int col,float offset, float wallstriph
 int	            ft_texture_draw(int col, float rayangle);
 t_run		    *ft_horz(t_run *mdr, float rayangle);
 void		    ft_horz_inc(t_run *mdr);
-void		ft_draw_texture(t_image ptr, int col,
+void		    ft_draw_texture(t_image ptr, int col,
 float offset, float wallstripheight);
 #endif

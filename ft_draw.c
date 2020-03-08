@@ -6,13 +6,13 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:57 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:39:57 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 06:41:48 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libcub3d.h"
 
-void			t_draw_sprites(void)
+void			ft_draw_sprites(void)
 {
 	int			i;
 
