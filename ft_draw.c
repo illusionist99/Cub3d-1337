@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:57 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:41:48 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 06:57:54 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void			ft_check_case(char c, int i, int j)
 
 void			ft_draw_map(void)
 {
-	int         i;
-	int         j;
-	static int  first_t;
+	int			i;
+	int			j;
+	static int	first_t;
 
 	i = 0;
 	j = 0;

@@ -87,7 +87,7 @@ typedef struct s_data
     int         Height;
     t_texture   Path;
     t_color     floor;
-    t_color     ceilling;
+    t_color     c;
     char        *map[50];
     int         cols;
     int         index;
