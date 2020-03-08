@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:32:09 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 07:09:42 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_run		*ft_vert(t_run *mdr, float rayangle)
 void		ft_draw_fc_mini(int col, float wallstripheight)
 {
 	ft_draw_line(col, 0, col,
-		data.Height / 2 - wallstripheight / 2 + g_look, data.ceilling.color);
+		data.Height / 2 - wallstripheight / 2 + g_look, data.c.color);
 	ft_draw_line(col, data.Height / 2 + wallstripheight / 2 + g_look,
 		col, data.Height, data.floor.color);
 	ft_draw_line(player.x * MINIMAP_SCALE, player.y * MINIMAP_SCALE,

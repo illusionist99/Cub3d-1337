@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 07:04:04 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 07:10:28 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		ft_floor(char *str)
 		data.floor.color = rgb_to_int(data.floor.r, data.floor.g, data.floor.b);
 }
 
-void		ft_ceilling(char *str)
+void		ft_c(char *str)
 {
 	int		i;
 
