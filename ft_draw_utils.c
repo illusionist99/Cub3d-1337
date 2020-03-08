@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 21:43:02 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 04:31:52 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 06:33:41 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ft_drawmap(void)
 		while (data.map[i][j] != '\0')
 		{
 			if (data.map[i][j] == '1')
-				ft_draw_cube(j * TILE_SIZE , i * TILE_SIZE);
+				ft_draw_cube(j * TILE_SIZE, i * TILE_SIZE);
 			j++;
 		}
 		i++;
@@ -72,7 +72,7 @@ void		ft_draw_player(void)
 	int		col;
 
 	col = 0;
-	angle = player.dirangle - (player.fov)/2;
+	angle = player.dirangle - (player.fov) / 2;
 	angle_inc = player.fov/data.Width;
 	while (col < data.Width)
 	{

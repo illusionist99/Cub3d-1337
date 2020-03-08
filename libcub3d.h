@@ -220,4 +220,8 @@ int		        vert_intersection(int col, float rayangle);
 void		    ft_get_distance(int col,  t_dir horzwallhit, t_dir vertwallhit);
 void	        ft_draw_texture(t_image ptr, int col,float offset, float wallstripheight);
 int	            ft_texture_draw(int col, float rayangle);
+t_run		    *ft_horz(t_run *mdr, float rayangle);
+void		    ft_horz_inc(t_run *mdr);
+void		ft_draw_texture(t_image ptr, int col,
+float offset, float wallstripheight);
 #endif
