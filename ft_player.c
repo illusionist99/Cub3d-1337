@@ -6,16 +6,16 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:43 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 02:43:49 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 08:31:17 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libcub3d.h"
 
-void    ft_position_update(void)
+void		ft_position_update(void)
 {
-	float 	movestep;
-	t_dir 	newplayer;
+	float	movestep;
+	t_dir	newplayer;
 	t_dir	collision;
 	t_dir	tex_coll;
 
@@ -25,23 +25,22 @@ void    ft_position_update(void)
 	newplayer.y = player.y + sin(player.dirangle) * movestep;
 	collision.x = player.x + cos(player.dirangle) * movestep * 5;
 	collision.y = player.y + sin(player.dirangle) * movestep * 5;
-	if (ft_hasWall(collision.x, collision.y))
+	if (ft_haswall(collision.x, collision.y))
 	{
 		tex_coll.x = player.x + cos(player.dirangle) * movestep * 3;
 		tex_coll.y = player.y + sin(player.dirangle) * movestep * 3;
-		if (ft_hasWall_tex(&tex_coll))
+		if (ft_haswall_tex(&tex_coll))
 		{
 			player.x = newplayer.x;
 			player.y = newplayer.y;
 		}
 	}
-
 }
 
-int     ft_hasWall(float pos_x, float pos_y)
+int			ft_haswall(float pos_x, float pos_y)
 {
-	int x;
-	int y;
+	int		x;
+	int		y;
 
 	x = (int)floor(pos_x / TILE_SIZE);
 	y = (int)floor(pos_y / TILE_SIZE);
@@ -54,10 +53,10 @@ int     ft_hasWall(float pos_x, float pos_y)
 	return (1);
 }
 
-int     ft_hasWall_tex(t_dir *pos)
+int			ft_haswall_tex(t_dir *pos)
 {
-	int x;
-	int y;
+	int		x;
+	int		y;
 
 	x = (int)floor(pos->x / TILE_SIZE);
 	y = (int)floor(pos->y / TILE_SIZE);
@@ -68,9 +67,9 @@ int     ft_hasWall_tex(t_dir *pos)
 	return (1);
 }
 
-int     ft_map_cols(char **map)
+int			ft_map_cols(char **map)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (map[i] != '\0')

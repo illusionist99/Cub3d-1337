@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 06:31:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 06:32:55 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 08:30:30 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		ft_horz_inc(t_run *mdr)
 	mdr->nextHorzTouchX < 35 * TILE_SIZE) &&
 	(mdr->nextHorzTouchY >= 0 && mdr->nextHorzTouchY < 14 * TILE_SIZE))
 	{
-		if (!ft_hasWall(mdr->nextHorzTouchX, mdr->nextHorzTouchY))
+		if (!ft_haswall(mdr->nextHorzTouchX, mdr->nextHorzTouchY))
 		{
 			mdr->foundHorzwallHit = TRUE;
 			mdr->horzWallHitX = mdr->nextHorzTouchX;

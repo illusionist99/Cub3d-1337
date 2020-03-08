@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 07:09:42 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/08 08:30:30 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		ft_vert_inc(t_run *mdr)
 	mdr->nextVertTouchX < 35 * TILE_SIZE) &&
 	(mdr->nextVertTouchY >= 0 && mdr->nextVertTouchY < 14 * TILE_SIZE))
 	{
-		if (!ft_hasWall(mdr->nextVertTouchX, mdr->nextVertTouchY))
+		if (!ft_haswall(mdr->nextVertTouchX, mdr->nextVertTouchY))
 		{
 			mdr->foundVertwallHit = TRUE;
 			mdr->vertWallHitX = mdr->nextVertTouchX;
