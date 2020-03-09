@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:39 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:15:57 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 17:28:25 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void			render_spt(int x, int y, int sp_size, int k)
 {
 	int			color;
-	int			a;
 	int			i;
 	int			j;
 
@@ -57,7 +56,7 @@ void			ft_sprite(int i)
 		sp_size = (g_data.height / g_s_data[i].distance) * TILE_SIZE;
 	else
 		sp_size = (g_data.width / g_s_data[i].distance) * TILE_SIZE;
-	y_inter = g_data.height / 2 - sp_size / 2 + g_look;
+	y_inter = g_data.height / 2 - sp_size / 2 + 50 * g_look;
 	x_inter = (sp_angle - g_player.dirangle) /
 	g_player.fov * g_data.width + (g_data.width / 2 - sp_size / 2);
 	render_spt(x_inter, y_inter, sp_size, i);
@@ -118,7 +117,6 @@ void			init_sprites(void)
 	int			i;
 	int			j;
 	int			k;
-	static int	l;
 
 	i = 0;
 	j = 0;

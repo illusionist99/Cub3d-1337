@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:57 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 09:16:48 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 11:08:54 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void			ft_draw_map(void)
 	static int	first_t;
 
 	i = 0;
-	j = 0;
 	while (g_data.map[i] != '\0' && first_t == 0)
 	{
 		j = 0;
@@ -78,7 +77,12 @@ void			ft_draw_map(void)
 				ft_draw_cube(j * TILE_SIZE, i * TILE_SIZE);
 			else if ((g_data.map[i][j] == 'N' || g_data.map[i][j] == 'W'
 			|| g_data.map[i][j] == 'E' || g_data.map[i][j] == 'S'))
+			{
+				g_nb_p++;
+				if (g_nb_p > 1)
+					ft_free(i, "Multiple Player Position");
 				ft_check_case(g_data.map[i][j], i, j);
+			}
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 08:52:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 14:13:30 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 17:53:33 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
@@ -26,10 +25,12 @@
 # include <sys/wait.h>
 
 # define EXIT_KEY		53
-# define KEY_LEFT		123
-# define KEY_RIGHT		124
-# define KEY_DOWN		125
-# define KEY_UP			126
+# define KEY_LEFT		0
+# define KEY_RIGHT		2
+# define KEY_DOWN		1
+# define KEY_UP			13
+# define KEY_LOOKUP		126
+# define KEY_LOOKDOWN	125
 # define TILE_SIZE		64
 # define MINIMAP_SCALE	g_data.width * 0.00009
 # define WHITE 			16777215
@@ -170,13 +171,13 @@ typedef struct			s_line
 	float				y;
 }						t_line;
 
-float					g_ray_distance[2560];
+int						g_nb_p;
+float					g_ray_distance[2561];
 t_ray					g_ray;
 t_data					g_data;
 t_mlx					g_mlx;
 t_player				g_player;
 t_image					g_image;
-t_image					g_gun;
 t_pos					g_wallhit;
 t_pos					g_texhit;
 t_image					g_north;
@@ -186,13 +187,13 @@ t_image					g_east;
 t_image					g_sprite;
 t_sprites				g_s_data[50];
 pid_t					g_child;
-pid_t					g_childd;
+int						g_save;
 int						g_look;
 
 int						ft_find_biggest_line(void);
 void					set_hooks(void);
 int						ft_update(char *argv);
-void					ft_pixel_put(float x, float y, unsigned int color);
+void					ft_pixel_put(int x, int y, unsigned int color);
 int						ft_read_map(char **str);
 unsigned int			rgb_to_int(unsigned int r,
 unsigned int g, unsigned int b);
@@ -234,8 +235,15 @@ void					ft_horz_inc(t_run *mdr);
 void					ft_draw_texture(t_image ptr, int col,
 float offset, float wallstripheight);
 int						exit_hook(int keycode, void *param);
-char					*ft_check_map(char *str);
 void					ft_c(char *str);
 void					ft_floor(char *str);
-unsigned int			shadow(int color, int col);
+unsigned int			shadow(unsigned int color, int col);
+void					ft_free_map(int n, char *error_msg);
+int						ft_check_valid(char *s, int m_index);
+void					ft_free(int n, char *s);
+void					ft_free_sprites(t_texture *ptr);
+int						ft_check_maze(void);
+void					ft_free_struct(t_image *ptr);
+int						ft_check_name(char *s);
+int						ft_check_for_error(char *s, int m_index);
 #endif

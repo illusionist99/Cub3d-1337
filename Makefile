@@ -13,7 +13,8 @@ SRC =	ft_gather_data.c\
 		ft_draw_utils.c\
 		ft_intersection_utils.c\
 		ft_utils.c\
-		ft_shadow.c
+		ft_shadow.c\
+		ft_check_maze.c
 
 
 LIB = ft_printf/libftprintf.a
@@ -32,7 +33,7 @@ all : $(NAME)
 $(NAME) : 
 		make -C ft_printf/ re
 		make -C minilibx/ re
-		gcc  -o $(NAME) $(GNL) $(SRC) $(MLIB) $(LIB) $(SEV) $(OPENGL) -lm  -g
+		gcc  -o $(NAME)  -Wall -Werror -Wextra $(GNL) $(SRC) $(MLIB) $(LIB) $(SEV) $(OPENGL) -lm  -g
 		make clean
 
 clean:

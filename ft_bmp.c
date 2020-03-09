@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 20:38:31 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:15:57 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 12:12:34 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,5 @@ void			ft_handle_bmp(void)
 	ft_set_infoheader();
 	ft_right_shift();
 	ft_to_bmp();
-	system(ft_strjoin("kill ", ft_itoa(g_child)));
-	exit(1);
+	ft_free(0, "Image Saved Successfully !");
 }

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:31:09 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 17:39:23 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void		ft_vert_inc(t_run *mdr)
 {
 	while ((mdr->nextverttouchx >= 0 &&
-	mdr->nextverttouchx < 35 * TILE_SIZE) &&
-	(mdr->nextverttouchy >= 0 && mdr->nextverttouchy < 14 * TILE_SIZE))
+	mdr->nextverttouchx < g_data.nb_of_cols * TILE_SIZE) &&
+	(mdr->nextverttouchy >= 0 && mdr->nextverttouchy <
+	g_data.nb_of_rows * TILE_SIZE))
 	{
 		if (!ft_haswall(mdr->nextverttouchx, mdr->nextverttouchy))
 		{
@@ -61,10 +62,10 @@ void		ft_draw_fc_mini(int col, float wallstripheight)
 	line.x0 = col;
 	line.y0 = 0;
 	line.x1 = col;
-	line.y1 = g_data.height / 2 - wallstripheight / 2 + g_look;
+	line.y1 = g_data.height / 2 - wallstripheight / 2 + 50 * g_look;
 	ft_draw_line(line, g_data.c.color);
 	line.x0 = col;
-	line.y0 = g_data.height / 2 + wallstripheight / 2 + g_look;
+	line.y0 = g_data.height / 2 + wallstripheight / 2 + 50 * g_look;
 	line.x1 = col;
 	line.y1 = g_data.height;
 	ft_draw_line(line, g_data.floor.color);

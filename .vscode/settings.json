@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "cstdlib": "c",
-        "__mutex_base": "c",
-        "system_error": "c",
-        "ios": "c"
-    }
-}

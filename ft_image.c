@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:48 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 13:54:45 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 12:49:43 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ void		ft_image_settings(void)
 	g_image.ptr = mlx_new_image(g_mlx.mlx, g_data.width, g_data.height);
 	g_image.data = (int *)mlx_get_data_addr(g_image.ptr,
 	&(g_image.bits_per_pixel), &(g_image.size_line), &(g_image.endian));
-	g_gun.ptr = mlx_xpm_file_to_image(g_mlx.mlx, "xpm/weapon/gun1.xpm",
-			&g_gun.width, &g_gun.height);
-	g_gun.data = (int *)mlx_get_data_addr(g_gun.ptr,
-	&(g_gun.bits_per_pixel), &(g_gun.size_line), &(g_gun.endian));
 }
 
 void		get_text_data(void)
@@ -59,9 +55,24 @@ void		init_textures(void)
 				&g_sprite.size_line, &g_sprite.endian);
 	}
 	else
-	{
-		ft_printf("\033[31mInvalid Texture path \
-!\n\033[32mUsage : ./file.xpm\033[0m\n");
-		exit(1);
-	}
+		ft_free(0, "\033[31mInvalid Texture path \
+		\033[32mUsage : ./file.xpm");
+}
+
+void		ft_free(int n, char *s)
+{
+	ft_free_map(n, s);
+	if (g_north.ptr)
+		ft_free_struct(&g_north);
+	if (g_west.ptr)
+		ft_free_struct(&g_west);
+	if (g_south.ptr)
+		ft_free_struct(&g_south);
+	if (g_east.ptr)
+		ft_free_struct(&g_east);
+	if (g_sprite.ptr)
+		ft_free_struct(&g_sprite);
+	ft_free_sprites(&(g_data.path));
+	system(ft_strjoin("kill ", ft_itoa(g_child)));
+	exit(1);
 }

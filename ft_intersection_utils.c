@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 06:31:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 14:13:04 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 17:39:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ float offset, float wallstripheight)
 	float	texture_y;
 	float	step;
 
-	start = g_data.height / 2 - wallstripheight / 2 + g_look;
-	end = g_data.height / 2 + wallstripheight / 2 + g_look;
+	start = g_data.height / 2 - wallstripheight / 2 + 50 * g_look;
+	end = g_data.height / 2 + wallstripheight / 2 + 50 * g_look;
 	texture_y = 0;
 	step = (float)(ptr.height / (end - start));
-	while (start <= end)
+	while (start < end)
 	{
 		if ((int)(texture_y) * ptr.height +
 		(int)offset < ptr.height * ptr.width)
@@ -38,8 +38,9 @@ float offset, float wallstripheight)
 void		ft_horz_inc(t_run *mdr)
 {
 	while ((mdr->nexthorztouchx >= 0 &&
-	mdr->nexthorztouchx < 35 * TILE_SIZE) &&
-	(mdr->nexthorztouchy >= 0 && mdr->nexthorztouchy < 14 * TILE_SIZE))
+	mdr->nexthorztouchx < g_data.nb_of_cols * TILE_SIZE) &&
+	(mdr->nexthorztouchy >= 0 && mdr->nexthorztouchy <
+	g_data.nb_of_rows * TILE_SIZE))
 	{
 		if (!ft_haswall(mdr->nexthorztouchx, mdr->nexthorztouchy))
 		{

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:35 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 14:35:56 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 16:30:26 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int			ft_find_biggest_line(void)
 	max = 0;
 	while (g_data.map[i] != '\0')
 	{
-		if (ft_strlen(g_data.map[i]) > max)
+		if (max < (int)ft_strlen(g_data.map[i]))
 			max = ft_strlen(g_data.map[i]);
 		i++;
 	}
-	return (i);
+	return (max);
 }
 
 int			ft_update(char *argv)
@@ -47,11 +47,8 @@ int			ft_update(char *argv)
 int			main_process(char **argv)
 {
 	if (ft_read_map(&argv[1]) == 0)
-	{
-		ft_printf("\033[31mInvalid File Format \
+		ft_free(-1, "\033[31mInvalid File Format \
 !\n\033[32mTry : <yourfilename + <.cub>>\033[0m\n");
-		return (EXIT_FAILURE);
-	}
 	else
 		ft_printf("\033[0m[\033[0;32m+\033[0m]\033[0m \
 Getting Data From \033[0;32m [%s] \033[0m!\n", argv[1]);
@@ -64,6 +61,8 @@ Getting Data From \033[0;32m [%s] \033[0m!\n", argv[1]);
 		g_data.height, "1337 Cub3d");
 		set_hooks();
 	}
+	else
+		g_save = 1;
 	init_player();
 	init_textures();
 	init_sprites();
@@ -89,9 +88,12 @@ int			main(int argc, char **argv)
 
 	i = 0;
 	g_look = 0;
+	g_nb_p = 0;
+	g_save = 0;
 	if (argc >= 2)
 		init_game(argv);
 	else
 		ft_printf("\033[31mInvalid Arguments !\033[0m\n");
+	system("leaks");
 	return (0);
 }

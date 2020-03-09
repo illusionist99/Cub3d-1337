@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 21:43:02 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:15:57 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/09 17:54:15 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		ft_drawmap(void)
 	}
 }
 
-void		ft_pixel_put(float x, float y, unsigned int color)
+void		ft_pixel_put(int x, int y, unsigned int color)
 {
 	if ((x >= 0 && x < g_data.width) && (y >= 0 && y < g_data.height))
 		g_image.data[((int)x + ((int)y) * g_data.width)] = color;
