@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 10:30:18 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/09 17:52:52 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 00:34:18 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int		ft_check_valid(char *s, int m_index)
 		if (trim[0] != '1' || trim[ft_strlen(trim) - 1] != '1')
 			return (-1);
 		if (ft_check_for_error(trim, m_index) != 1)
+		{
 			ft_free(g_data.nb_of_cols, "INVALID MAP");
+			return (-1);
+		}
 	}
 	else if (m_index == g_data.index)
 	{
@@ -72,6 +75,24 @@ void	ft_free_sprites(t_texture *ptr)
 		free(ptr->west);
 }
 
+int		ft_check_final(char *s, int m_index)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '0')
+		{
+			if (g_data.map[m_index + 1][i] == ' ' ||
+			g_data.map[m_index - 1][i] == ' ')
+				return (-1);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int		ft_check_maze(void)
 {
 	int i;
@@ -80,10 +101,9 @@ int		ft_check_maze(void)
 	while (g_data.map[i] != '\0')
 	{
 		if (ft_check_valid(g_data.map[i], i) != 1)
-		{
 			ft_free(i, "Map is invalid");
-			return (-1);
-		}
+		if (ft_check_final(g_data.map[i], i) != 1)
+			ft_free(i, "Map is invalid");
 		i++;
 	}
 	ft_printf("\033[0;32m *** Map is Valid loading ...\033[0m!\n");

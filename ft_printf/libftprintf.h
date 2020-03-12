@@ -6,11 +6,11 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 18:04:31 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/08 10:24:30 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/12 23:35:36 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	LIBFTPRINTF_H
+#ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 
 # include "libft/libft.h"
@@ -88,4 +88,5 @@ int				ft_for_minus(char *s, va_list list, t_combo *foo, int *pos);
 void			ft_setstring(char **str, size_t *i);
 void			ft_notnull(char **p, char *s);
 int				ft_negprecision(char **p, int i, int len);
+int				ft_check_str(char *s);
 #endif

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 10:45:22 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/09 17:39:23 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/11 01:41:57 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		ft_vert_inc(t_run *mdr)
 {
-	while ((mdr->nextverttouchx >= 0 &&
+	while ((mdr->nextverttouchx > 0 &&
 	mdr->nextverttouchx < g_data.nb_of_cols * TILE_SIZE) &&
-	(mdr->nextverttouchy >= 0 && mdr->nextverttouchy <
+	(mdr->nextverttouchy > 0 && mdr->nextverttouchy <
 	g_data.nb_of_rows * TILE_SIZE))
 	{
 		if (!ft_haswall(mdr->nextverttouchx, mdr->nextverttouchy))

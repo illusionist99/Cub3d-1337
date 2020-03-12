@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/09 17:39:58 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 00:36:56 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void		ft_resolution(char *str)
 		while (str[i] == ' ')
 			i++;
 		g_data.height = atoi(&str[i]);
+		while (ft_isdigit(str[i]))
+			i++;
+		while (str[i] == ' ')
+			i++;
+		if (ft_isdigit(str[i]))
+			ft_free(-1, "INVALID RESOLUTION");
 	}
 	if (g_data.height <= 0 || g_data.width <= 0)
 		ft_free(0, "Invalid Resolution !");
@@ -51,8 +57,22 @@ void		ft_sprite_path(char *str)
 
 int			ft_get_map(char *str)
 {
-	g_data.map[g_data.index] = ft_strdup(str);
-	g_data.index++;
+	if (ft_isdigit(str[0]) || str[0] == ' ')
+	{
+		if (ft_check_str(str) == 1)
+		{
+			g_data.map[g_data.index] = ft_strdup(str);
+			g_data.index++;
+		}
+		else
+			ft_free(g_data.index, "INVALID CHAR AT MAP");
+	}
+	else
+	{
+		g_data.map[g_data.index] = ft_strdup(str);
+		g_data.index++;
+	}
+
 	return (1);
 }
 
@@ -60,9 +80,9 @@ int			ft_analyse(char *str)
 {
 	if (str[0] == 'R')
 		ft_resolution(str);
-	else if (str[0] == 'F')
+	else if (str[0] == 'F' && str[1] == ' ')
 		ft_floor(str + 1);
-	else if (str[0] == 'C')
+	else if (str[0] == 'C' && str[1] == ' ')
 		ft_c(str + 1);
 	else if (ft_memcmp(str, "NO", 2) == 0)
 		g_data.path.north = ft_substr(str, 5, ft_strlen(str + 3));
@@ -72,7 +92,7 @@ int			ft_analyse(char *str)
 		g_data.path.west = ft_substr(str, 5, ft_strlen(str + 3));
 	else if (ft_memcmp(str, "EA", 2) == 0)
 		g_data.path.east = ft_substr(str, 5, ft_strlen(str + 3));
-	else if (str[0] == 'S')
+	else if (str[0] == 'S' && str[1] == ' ')
 		ft_sprite_path(str);
 	else if (ft_isdigit(str[0]) || str[0] == ' ')
 	{
