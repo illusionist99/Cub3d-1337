@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:35 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/11 23:52:43 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 14:31:35 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int			main(int argc, char **argv)
 	g_look = 0;
 	g_nb_p = 0;
 	g_save = 0;
+	g_order = 0;
 	if (argc == 2)
 		init_game(argv);
 	else

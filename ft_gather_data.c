@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 17:06:06 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/13 00:36:56 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 14:31:07 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,30 +72,30 @@ int			ft_get_map(char *str)
 		g_data.map[g_data.index] = ft_strdup(str);
 		g_data.index++;
 	}
-
 	return (1);
 }
 
 int			ft_analyse(char *str)
 {
-	if (str[0] == 'R')
+	if (str[0] == 'R' && !g_order)
 		ft_resolution(str);
-	else if (str[0] == 'F' && str[1] == ' ')
+	else if (str[0] == 'F' && str[1] == ' ' && !g_order)
 		ft_floor(str + 1);
-	else if (str[0] == 'C' && str[1] == ' ')
+	else if (str[0] == 'C' && str[1] == ' ' && !g_order)
 		ft_c(str + 1);
-	else if (ft_memcmp(str, "NO", 2) == 0)
+	else if ((ft_memcmp(str, "NO", 2) == 0) && !g_order)
 		g_data.path.north = ft_substr(str, 5, ft_strlen(str + 3));
-	else if (ft_memcmp(str, "SO", 2) == 0)
+	else if ((ft_memcmp(str, "SO", 2) == 0) && !g_order)
 		g_data.path.south = ft_substr(str, 5, ft_strlen(str + 3));
-	else if (ft_memcmp(str, "WE", 2) == 0)
+	else if ((ft_memcmp(str, "WE", 2) == 0) && !g_order)
 		g_data.path.west = ft_substr(str, 5, ft_strlen(str + 3));
-	else if (ft_memcmp(str, "EA", 2) == 0)
+	else if ((ft_memcmp(str, "EA", 2) == 0) && !g_order)
 		g_data.path.east = ft_substr(str, 5, ft_strlen(str + 3));
-	else if (str[0] == 'S' && str[1] == ' ')
+	else if (str[0] == 'S' && str[1] == ' ' && !g_order)
 		ft_sprite_path(str);
 	else if (ft_isdigit(str[0]) || str[0] == ' ')
 	{
+		g_order = 1;
 		if (ft_get_map(str) != 1)
 			return (-1);
 	}

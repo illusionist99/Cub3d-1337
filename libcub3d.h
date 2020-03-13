@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 08:52:37 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/09 17:53:33 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 14:29:33 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ t_sprites				g_s_data[50];
 pid_t					g_child;
 int						g_save;
 int						g_look;
+int						g_order;
 
 int						ft_find_biggest_line(void);
 void					set_hooks(void);

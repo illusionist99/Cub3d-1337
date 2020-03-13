@@ -6,11 +6,24 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:57:48 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/09 12:49:43 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 00:53:34 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libcub3d.h"
+
+void		ft_free_map(int n, char *error_msg)
+{
+	int i;
+
+	i = 0;
+	while (i < n && g_data.map[i] != '\0')
+	{
+		free(g_data.map[i]);
+		i++;
+	}
+	ft_printf("\033[0;32m [!] %s \033[0m!\n", error_msg);
+}
 
 void		ft_image_settings(void)
 {

@@ -6,7 +6,7 @@
 /*   By: malaoui <malaoui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 18:04:31 by malaoui           #+#    #+#             */
-/*   Updated: 2020/03/12 23:35:36 by malaoui          ###   ########.fr       */
+/*   Updated: 2020/03/13 00:53:18 by malaoui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void			ft_setstring(char **str, size_t *i);
 void			ft_notnull(char **p, char *s);
 int				ft_negprecision(char **p, int i, int len);
 int				ft_check_str(char *s);
+void			ft_free_map(int n, char *error_msg);
 #endif
